@@ -221,3 +221,20 @@ Received Import Request.
 Start importing Assets/Scenes/MainScene.unity using Guid(13603f7a7cb55c846b87499050a37538) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '9dde200e8d31500f56f0907ad2cfab28') in 0.004099 seconds 
   Import took 0.041493 seconds .
 
+========================================================================
+Received Import Request.
+  Time since last request: 323.699870 seconds.
+  path: Assets/Scenes
+  artifactKey: Guid(e8d8c558732c7ae40983c44dbe5d3598) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Scenes using Guid(e8d8c558732c7ae40983c44dbe5d3598) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '9b4246445791e5a50aaa53c5b1c6a235') in 0.008745 seconds 
+  Import took 0.024666 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 7.457489 seconds.
+  path: Assets/Scenes/DebugGabriel.unity
+  artifactKey: Guid(f77084014db148842a2a6af54bc39a76) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Scenes/DebugGabriel.unity using Guid(f77084014db148842a2a6af54bc39a76) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '3d589ac698c8390431e40fbc13ecee93') in 0.004920 seconds 
+  Import took 0.019940 seconds .
+
+AssetImportWorkerClient::OnTransportError - code=2 error=End of file
