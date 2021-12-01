@@ -38,6 +38,11 @@ public class QuoteObject : MonoBehaviour
 
   public void ShowQuote()
   {
-    Debug.Log(text);
+    Debug.Log(FormatedText());
+  }
+
+  string FormatedText()
+  {
+    return text.Replace("\"\"", "\n");
   }
 }

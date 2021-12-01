@@ -12,11 +12,14 @@ public class QuoteController : MonoBehaviour
   List<QuoteObject> quoteObjects;
   HashSet<int> usedQuotes;
 
-  // Dictionary<string, int> quoteObjectToQuote;  mais para o sistema de save no futuro
+  [SerializeField] int seed = 10; // mais para o sistema de save no futuro
+
 
   private void Awake()
   {
     CSVToQuoteList();
+    seed = Random.Range(0, 1000); // gerar aleatóriamente ou carregar do save
+    Random.InitState(seed);
   }
 
   void Start()
@@ -29,7 +32,7 @@ public class QuoteController : MonoBehaviour
       int quoteNumber = GetAvaliableQuoteFromList();
       string quote = quoteList[quoteNumber];
 
-      quoteObject.Setup(this, quoteNumber, quote);
+      string objectId = quoteObject.Setup(this, quoteNumber, quote);
     }
   }
 
