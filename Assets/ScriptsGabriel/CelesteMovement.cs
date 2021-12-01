@@ -4,131 +4,129 @@ using UnityEngine;
 
 public class CelesteMovement : MonoBehaviour
 {
-    #region Variables
-    [Header("Running Settings")]
-    [Header("---Variables---")]
-    [SerializeField] private float _accel = 50f; //multiply velocity
-    [SerializeField] private float _maxSpeed = 6f; //clamp
-    [SerializeField] private float _decel = 12f; // set lineardrag
-    [SerializeField] private float _decelThreshold = 0.4f;
-    [Header("Jumping Settings")]
-    [Range(0f, 10f)]
-    [SerializeField] private float _jumpAccel = 2f; //Addtive
-    [SerializeField] private float _airTimeMax = 12f; //Frames
-    [SerializeField] private float _airTimeMin = 1f; //Frames
-    [SerializeField] private float _velociTyMax = 10f; //Clamp
-    [SerializeField] private float _velociTyMin = 1f; //Clamp
-    private float _jumpForce;
-    private float _jumpingTime;
-    private float _airTime;
-    [Header("Dashing Settings")]
-    [SerializeField] private float _dashVelocity = 15f; //Addtive
-    [SerializeField] private float _dashVelocityAir = 10f; //Addtive    
-    [SerializeField] private float _dashDuration = 25f;
-    [SerializeField] private short _dashCounter = 1;
-    private float _dashDurationCounter;
-    private float _dashingTime;
+    #region Variables/Constants
+    [Header("Run / Jump")]
+    [Header("Constants")]
+    [SerializeField] private float _runSpeed = 5f;
+    [SerializeField] private float _jumpDuration = 10f;
+    [SerializeField] private float _jumpMinSpeed = 1f;
+    [SerializeField] private float _jumpMaxSpeed = 15f;
+    [SerializeField] private float _jumpAcell = 8f;
+    private float _jumpSpeed;
+    private float _jumpTimer;    
+    [Header("Dash")]
+    [SerializeField] private float _dashSpeed = 10f;
+    [SerializeField] float _dashDuration = 5f;
+    private float _dashTimer;        
     [Header("Air Control")]
     [SerializeField] private float _fallMultiplier = 12f; //multiply by gravity
-    [SerializeField] private float _decelAir = 5f; //set lineardrag    
-    [Header("Wall Settings")]
-    [SerializeField] private float _wallSlideVelocity = 4f; //set velocity
-    [SerializeField] private float _wallJumpTimeMax = 10f; //frames
-    [SerializeField] private float _wallJumpVelocity = 12f; //set velocity    
-    [Header("QOL Setings")]
+    [SerializeField] private float _airDecel = 5f;
+    [Header("Ground Collision")]
+    [SerializeField] LayerMask _groundLayer;
+    [SerializeField] Vector2 _groundOffset = new Vector2(0f, -0.82f);
+    [SerializeField] private float _groundRadius = 0.2f;
+    [Header("Wall Collision")]
+    [SerializeField] private float _wallSlideVelocity = 4f;
+    [SerializeField] LayerMask _wallLayer;
+    [SerializeField] Vector2 _wallLefOffset = new Vector2(-0.5f, -0.4f);
+    [SerializeField] private float _wallLefRadius = 0.2f;
+    [SerializeField] Vector2 _wallRightOffset = new Vector2(0.5f, -0.4f);
+    [SerializeField] private float _wallRighRadius = 0.2f;
+    [Header("Corner Correction")]
+    [Space]
+    [Header("QOF Parameters")]
+    [SerializeField] private LayerMask _ccLayers;
+    [SerializeField] private float _ccLenghtRayCast = 1.2f;
+    [SerializeField] private Vector3 _ccEdegeRayCast = new Vector3(0.5f,0f,0f);
+    [SerializeField] private Vector3 _ccInerRayCast = new Vector3(0.25f, 0f, 0f);
+    private bool _cornerCorrection;
+    [Header("Dash Correction Left")]
+    [SerializeField] private LayerMask _dsLayers;
+    [SerializeField] private float _dsLenghtRayCast = 1.5f;
+    [SerializeField] private Vector3 _dsEdegeRayCast = new Vector3(0f, 0.75f, 0f);
+    [SerializeField] private Vector3 _dsInerRayCast = new Vector3(0f, 0.55f, 0f);    
+    [Header("Dash Correction Right")]
+    [SerializeField] private float _dsRLenghtRayCast = 1.5f;
+    [SerializeField] private Vector3 _dsREdegeRayCast = new Vector3(0f, 0.75f, 0f);
+    [SerializeField] private Vector3 _dsRInerRayCast = new Vector3(0f, 0.55f, 0f);
+    [Header("Coyte/Wall/Jump Timer")]
     [SerializeField] private float _coyoteTimer = .1f;// Or Hang Timer, in seconds
     private float _coyoteTimerCounter;
     [SerializeField] private float _jumpBufferTimer = .1f;// A little help to jump close to the ground, in seconds
     private float _jumpBufferCounter;
     [SerializeField] private float _wallJumpBufferTimer = .1f;// A little help to jump close to the wall, in seconds
     private float _wallJumpBufferCounter;
-    [Header("Layers Check")]
-    [SerializeField] private LayerMask _groundLayer;
-    [SerializeField] private LayerMask _wallLayer;
-    [Range(0f, 2f)]
-    [SerializeField] private float _groundLenght = 1f;
-    [SerializeField] private Vector2 _wallSize = new Vector2(1f, 1f);
-    [SerializeField] private Vector3 _wallPosition = new Vector3(0f, 0f, 0f);
-    [SerializeField] private float _wallDistance = 0.5f;
-    [Header("Corner Correction")]
-    [SerializeField] private LayerMask _ccLayers;
-    [SerializeField] private float _ccLenghtRayCast;
-    [SerializeField] private Vector3 _ccEdegeRayCast;
-    [SerializeField] private Vector3 _ccInerRayCast;
-    private bool _cornerCorrection;
-    [Header("States")]
-    [Header("---Debug---")]
-    [SerializeField] private bool _facinRight = true;
-    [SerializeField] private bool _onGround = true;
-    [SerializeField] private bool _canMove = true;
-    [SerializeField] private bool _canJump = true;
-    [SerializeField] private bool _canDash = true;
-    [SerializeField] private bool _jumping = false;
-    [SerializeField] private bool _dashing = false;
-    [SerializeField] private bool _wallJumping = false;
-    [SerializeField] private bool _wallSlide = false;
-    [SerializeField] private bool _wallLeft = false;
-    [SerializeField] private bool _wallRight = false;
-    [SerializeField] private bool _changeDirection => (c_rigi2d.velocity.x > 0f && _horizontal < 0f || c_rigi2d.velocity.x < 0f && _horizontal > 0f);
-    [Header("Variables")]
-    [SerializeField] private float _horizontal;
-    [SerializeField] private float _vertical;
+    [Header("Debug")]
+    [Space]    
+    [SerializeField] private Vector2 _velocity;
     [SerializeField] private Vector2 _direction;
-    [SerializeField] private Vector2 velocity;
+    [SerializeField] bool _onGround = true;
+    [SerializeField] bool _canMove = true;
+    [SerializeField] bool _canJump = true;
+    [SerializeField] bool _jumping;
+    [SerializeField] bool _dashing;
+    [SerializeField] bool _wallSlide;
+    [SerializeField] bool _wallJumping;
+    [SerializeField] bool _faceRight = true;
+    [SerializeField] private bool _dashCorrection;
+    [SerializeField] private bool _dashRCorrection;
+    private float _horizontal;
+    private float _vertical;
+    Vector2 _wallDir;
+    [SerializeField] bool _wallLeft;
+    [SerializeField] bool _wallRight;
     #endregion
-    #region Components
+
     //Components
     Rigidbody2D c_rigi2d;
     SpriteRenderer c_sprite;
-    #endregion
     // Start is called before the first frame update
     private void Awake()
     {
         c_rigi2d = GetComponent<Rigidbody2D>();
         c_sprite = GetComponentInChildren<SpriteRenderer>();
     }
-    void Start()
-    {
-        
-    }
 
-    // Update is called once per frame
-    void Update()
-    {
-        velocity = c_rigi2d.velocity;
-        CheckCollision();
-        CheckStates();
-        CheckInputs();
+    private void Update()
+    {        
+        CheckInputs();        
     }
 
     private void FixedUpdate()
-    {
-        GravityManipulation();
-        if (_cornerCorrection) CornerCorrection(velocity.y);
-        if (_canMove) Running();
-        ApplyLinearDrag();
-        if (_jumping) Jumping();
+    {        
+        CheckColission();
+        PhysicManipulation();
+        if (_cornerCorrection) CornerCorrection(_velocity.y);        
+        if (_canMove) Running(_direction);
+        if (_jumping) Jump(Vector2.up);
+        if (_wallJumping) WallJump(_wallDir);
+        if (_dashing) Dash(_direction);
         if (_wallSlide) WallSlide();
-        if (_wallJumping) StartCoroutine(WallJump());
-        if (_dashing) StartCoroutine(Dash());
+        
     }
 
-    private void CheckInputs()
+    void CheckInputs()
     {
-        //running inputs
+        if (_onGround)
+        {
+            _coyoteTimerCounter = _coyoteTimer;
+        }
+        else
+        {
+            _coyoteTimerCounter -= Time.fixedDeltaTime;
+        }
+
+        //running
+        _velocity = c_rigi2d.velocity;
         _horizontal = Input.GetAxisRaw("Horizontal");
         if (_horizontal > -0.02f && _horizontal < 0.02f)
         {
             _horizontal = 0f;
         }
         _vertical = Input.GetAxisRaw("Vertical");
-        if (_vertical > -0.02f && _vertical < 0.02f)
-        {
-            _vertical = 0f;
-        }
         _direction = new Vector2(_horizontal, _vertical);
 
-        //Jump inputs
+        //jump
         if (Input.GetButtonDown("Jump"))
         {
             _jumpBufferCounter = _jumpBufferTimer;
@@ -137,16 +135,44 @@ public class CelesteMovement : MonoBehaviour
         else
         {
             _jumpBufferCounter -= Time.deltaTime;
-            _wallJumpBufferCounter -= Time.deltaTime;
+            _wallJumpBufferCounter -= Time.deltaTime;      
         }
 
-        if (_jumpBufferCounter > 0 && _canJump && _coyoteTimerCounter > 0)
-        {            
+        if (_jumpBufferCounter > 0 && _coyoteTimerCounter > 0)
+        {
+            _jumpTimer = 0f;
             _jumping = true;
-        }        
+        }
 
-        //wallslide inputs
-        if (!_onGround && velocity.y < 0 && (_wallLeft || _wallRight) && _horizontal != 0)
+        //Walljump
+        if (!_onGround && (_wallLeft || _wallRight) && !_jumping && _wallJumpBufferCounter > 0)
+        {
+            _jumpTimer = 0f;
+            _wallJumping = true;
+            _wallDir = _wallLeft ? Vector2.right : Vector2.left;
+        }
+
+        //dash
+        if (Input.GetButtonDown("Dash") && !_dashing)
+        {
+            _direction = new Vector2(_horizontal, _vertical);
+            _dashTimer = 0f;
+            _dashing = true;
+        }
+
+
+        //Flip
+        if (_canMove && _horizontal > 0 && !_faceRight)
+        {
+            Flip();
+        }
+        else if (_canMove && _horizontal < 0 && _faceRight)
+        {
+            Flip();
+        }
+
+        //wallslide
+        if((_wallLeft && _velocity.y < 0 && _horizontal < 0 || _wallRight && _velocity.y < 0 && _horizontal > 0) && !_wallJumping)
         {
             _wallSlide = true;
         }
@@ -155,169 +181,149 @@ public class CelesteMovement : MonoBehaviour
             _wallSlide = false;
         }
 
-        //walljump inputs
-        if (!_jumping && !_onGround && (_wallLeft || _wallRight) && _wallJumpBufferCounter > 0 && !_dashing)
-        {
-            _wallJumping = true;
-        }
-
-        //dash
-        if (Input.GetButtonDown("Dash") && _canDash && _dashCounter > 0 && !_dashing)
-        {
-            _dashing = true;
-            _dashingTime = 0f;
-            _dashDurationCounter = 1f;
-            _dashCounter = 0;
-        }
-        //Flip sprite
-        if (_canMove && _horizontal > 0 && !_facinRight)
-        {
-            Flip();
-        }
-        else if (_canMove && _horizontal < 0 && _facinRight)
-        {
-            Flip();
-        }
-
     }
     #region Running/Jumping
-        //Running method
-    private void Running()
+    void Running(Vector2 dir)
     {
-        c_rigi2d.AddForce(new Vector2(_horizontal, 0f) * _accel);
-        if (Mathf.Abs(velocity.x) > _maxSpeed)
+        if (!_wallJumping)
         {
-            c_rigi2d.velocity = new Vector2(Mathf.Sign(velocity.x) * _maxSpeed, velocity.y);
+            c_rigi2d.velocity = new Vector2(dir.x * _runSpeed, _velocity.y);
         }
-    }
-    //Jumping method
-    private void Jumping()
-    {
-        if (_jumping)
+        else
         {
-            c_rigi2d.gravityScale = 0f;
-            _coyoteTimerCounter = 0f;
-            _jumpBufferCounter = 0f;
-            //holding button increase airTime per frame
-            if (Input.GetButton("Jump"))
-            {
-                _jumpingTime += 1f;
-            }
-            if (_jumpingTime < _airTimeMin)
-            {
-                _jumpingTime = _airTimeMin;
-            }
-            //Force of jump is incresed by frames and accel, this make rising fast, but clamp at max speed
-            _jumpForce = Mathf.Clamp(_jumpAccel + _jumpingTime, _velociTyMin, _velociTyMax);
-            c_rigi2d.velocity = new Vector2(velocity.x, _jumpForce);
-            // cut jump if button is realsed
-            _airTime += 1f;
-            if (_airTime > _jumpingTime || _airTime > _airTimeMax)
+            c_rigi2d.velocity = Vector2.Lerp(c_rigi2d.velocity, (new Vector2(dir.x * _runSpeed, _velocity.y)), 10f * Time.deltaTime);
+        }
+      
+    }
+
+    void Jump(Vector2 dir)
+    {
+        if (!_canJump)
+        {
+            return;
+        }
+        if (!_wallJumping)
+        {
+            if (Input.GetButton("Jump")) _jumpTimer += 1f;
+            float jumpforce = Mathf.Clamp(_jumpSpeed + _jumpTimer, _jumpMinSpeed, _jumpMaxSpeed);
+            c_rigi2d.velocity = new Vector2(_velocity.x, jumpforce * dir.y + _jumpAcell);
+            if (_jumpTimer >= _jumpDuration || !Input.GetButton("Jump"))
             {
                 _jumping = false;
             }
         }
+        else
+        {
+            if (Input.GetButton("Jump")) _jumpTimer += 1f;
+            float jumpforce = Mathf.Clamp(_jumpSpeed + _jumpTimer, _jumpMinSpeed, _jumpMaxSpeed);
+            c_rigi2d.velocity = new Vector2(_velocity.x, 0);
+            dir = (dir + Vector2.up) * (jumpforce + _jumpAcell);            
+            c_rigi2d.velocity = dir;
+            if (_jumpTimer >= _jumpDuration || !Input.GetButton("Jump"))
+            {
+                _wallJumping = false;
+            }
+        }        
     }
     #endregion
-    #region Wall Interaction
-    //WallSlide
+    #region Wall Interactions
     private void WallSlide()
     {
-        _dashCounter = 1;
-        if (_wallLeft && _wallLeft && _horizontal < 0)
-        {
-            c_rigi2d.velocity = new Vector2(velocity.x, _wallSlideVelocity * -1);
-
-        }
-        else if (!_wallLeft && _wallRight && _horizontal > 0)
-        {
-            c_rigi2d.velocity = new Vector2(velocity.x, _wallSlideVelocity * -1);
-        }
+        c_rigi2d.velocity = new Vector2(_velocity.x, _wallSlideVelocity * -1);       
     }
-    IEnumerator WallJump()
+
+    void WallJump(Vector2 dir)
     {
-        yield return null;
+        StartCoroutine(DisableMove(0.3f));               
+        Jump(dir);
     }
     #endregion
-    #region Dashing
-    IEnumerator Dash()
-    {        
-        yield return null;
+    #region Dash Methods
+    void Dash(Vector2 dir)
+    {
+        if(dir.x == 0 && dir.y == 0 && _faceRight)
+        {
+            dir.x = 1;
+        }else if(dir.x == 0 && dir.y == 0 && !_faceRight)
+        {
+            dir.x = -1;
+        }        
+        StartCoroutine(DisableMove(0.2f));
+        ApplyDash(dir, 0.5f);
+        if (_dashing && (_dashCorrection || _dashRCorrection) && dir.y == 0) DashCorrection(_velocity.x);
+
+    }
+    IEnumerator DisableMove(float time)
+    {
+        _canMove = false;
+        yield return new WaitForSeconds(time);
+        _canMove = true;
+        yield break;
+    }
+
+    void ApplyDash(Vector2 dir, float time)
+    {
+        c_rigi2d.gravityScale = 0f;
+        _dashTimer += 1;
+        if(_dashTimer < 2f)
+        {
+            c_rigi2d.velocity = Vector2.zero;
+        }
+        else if(_dashTimer < _dashDuration )
+        {
+            c_rigi2d.velocity += dir * _dashSpeed;
+        }
+        else
+        {           
+            _dashing = false;
+        }       
     }
     #endregion
-    #region Physic Manipulation
-    //Gravity Manipulation
-    private void GravityManipulation()
+    #region Physic Stuffs
+    void CheckColission()
     {
-        if (!_onGround && velocity.y < 0 && !_wallSlide)
-        {
-            c_rigi2d.gravityScale = 1f * _fallMultiplier;
-        }
-        else
-        {
-            c_rigi2d.gravityScale = 1f;
-        }
-    }
-    //LinearDrag Control
-    private void ApplyLinearDrag()
-    {
-        //linear drag to decelerate a little the character
-        if (_onGround && Mathf.Abs(_horizontal) < _decelThreshold || _changeDirection && !_dashing)
-        {
-            c_rigi2d.drag = _decel;
-        }
-        else if (!_onGround && !_dashing)
-        {
-            c_rigi2d.drag = _decelAir;
-        }
-        else
-        {
-            c_rigi2d.drag = 0f;
-        }
-    }
-    #endregion
-    #region Control States
-    //Controle of states
-    private void CheckStates()
-    {
-        if (_dashCounter < 0 || _wallSlide && (!_canDash || !_canMove))
-        {
-            _canDash = false;
-        }
-        else
-        {
-            _canDash = true;
-        }
-
-        if (_onGround)
-        {
-            _airTime = 0;
-            _jumpingTime = 0;
-            _canJump = true;
-            _coyoteTimerCounter = _coyoteTimer;
-            _wallSlide = false;
-            _dashCounter = 1;
-        }
-        else
-        {
-            _coyoteTimerCounter -= Time.deltaTime;
-        }
-    }
-    //Collision
-    private void CheckCollision()
-    {
-        _onGround = Physics2D.Raycast(transform.position * _groundLenght, Vector2.down, _groundLenght, _groundLayer);
-
+        _onGround = Physics2D.OverlapCircle((Vector2)transform.position + _groundOffset, _groundRadius, _groundLayer);
+        _wallLeft = Physics2D.OverlapCircle((Vector2)transform.position + _wallLefOffset, _wallLefRadius, _wallLayer);
+        _wallRight = Physics2D.OverlapCircle((Vector2)transform.position + _wallRightOffset, _wallRighRadius, _wallLayer);
         _cornerCorrection = Physics2D.Raycast(transform.position + _ccEdegeRayCast, Vector2.up, _ccLenghtRayCast, _ccLayers) &&
                             !Physics2D.Raycast(transform.position + _ccInerRayCast, Vector2.up, _ccLenghtRayCast, _ccLayers) ||
                             Physics2D.Raycast(transform.position - _ccEdegeRayCast, Vector2.up, _ccLenghtRayCast, _ccLayers) &&
                             !Physics2D.Raycast(transform.position - _ccInerRayCast, Vector2.up, _ccLenghtRayCast, _ccLayers);
-        _wallLeft = Physics2D.BoxCast(transform.position + new Vector3(-1 * _wallPosition.x, _wallPosition.y, _wallPosition.z), _wallSize, 0f, Vector3.left, _wallDistance, _wallLayer);
-        _wallRight = Physics2D.BoxCast(transform.position + _wallPosition, _wallSize, 0f, Vector3.right, _wallDistance, _wallLayer);
+        _dashCorrection = Physics2D.Raycast(transform.position + _dsEdegeRayCast, Vector2.left, _dsLenghtRayCast, _dsLayers) &&
+                         !Physics2D.Raycast(transform.position + _dsInerRayCast, Vector2.left, _dsLenghtRayCast, _dsLayers) ||
+                          Physics2D.Raycast(transform.position - _dsEdegeRayCast, Vector2.left, _dsLenghtRayCast, _dsLayers) &&
+                         !Physics2D.Raycast(transform.position - _dsInerRayCast, Vector2.left, _dsLenghtRayCast, _dsLayers);
+        _dashRCorrection = Physics2D.Raycast(transform.position + _dsREdegeRayCast, Vector2.right, _dsRLenghtRayCast, _dsLayers) &&
+                          !Physics2D.Raycast(transform.position + _dsRInerRayCast, Vector2.right, _dsRLenghtRayCast, _dsLayers) ||
+                           Physics2D.Raycast(transform.position - _dsREdegeRayCast, Vector2.right, _dsRLenghtRayCast, _dsLayers) &&
+                          !Physics2D.Raycast(transform.position - _dsRInerRayCast, Vector2.right, _dsRLenghtRayCast, _dsLayers);
+    }    
+
+    void PhysicManipulation()
+    {
+        if (!_onGround)
+        {
+            c_rigi2d.gravityScale = 1f * _fallMultiplier;
+            c_rigi2d.drag = _airDecel;
+        }
+        else
+        {
+            c_rigi2d.gravityScale = 1f;
+            c_rigi2d.drag = 0f;
+        }
+
+        if (_jumping || _dashing || _wallSlide)
+        {
+            c_rigi2d.gravityScale = 0f;
+        }
+
+        if (_dashing)
+        {
+            c_rigi2d.drag = 0f;
+        } 
     }
     #endregion
-    #region QOL Methods
-    //No bonk head method
+    #region QOL Stuffs
     private void CornerCorrection(float velocityY)
     {
         RaycastHit2D _hit = Physics2D.Raycast(transform.position - _ccInerRayCast + Vector3.up * _ccLenghtRayCast, Vector3.left, _ccLenghtRayCast, _ccLayers);
@@ -339,28 +345,70 @@ public class CelesteMovement : MonoBehaviour
             c_rigi2d.velocity = new Vector2(c_rigi2d.velocity.x, velocityY);
         }
     }
+    private void DashCorrection(float velocityX)
+    {
+        RaycastHit2D _hit = Physics2D.Raycast(transform.position - _dsInerRayCast + Vector3.left * _dsLenghtRayCast, Vector3.down, _dsLenghtRayCast, _dsLayers);
+        if (_hit.collider != null)
+        {
+            float _newPosition = Vector3.Distance(new Vector3(_hit.point.x, transform.position.y, 0f) + Vector3.left * _dsLenghtRayCast,
+                transform.position - _dsEdegeRayCast + Vector3.left * _dsLenghtRayCast);
+            Debug.Log(_newPosition);
+            transform.position = new Vector3(transform.position.x, transform.position.y + _newPosition - 2f, transform.position.z);
+            c_rigi2d.velocity = new Vector2(velocityX, c_rigi2d.velocity.y);
+            return;
+        }
+
+        _hit = Physics2D.Raycast(transform.position + _dsInerRayCast + Vector3.left * _dsLenghtRayCast, Vector3.up, _dsLenghtRayCast, _dsLayers);
+        if (_hit.collider != null)
+        {
+            float _newPosition = Vector3.Distance(new Vector3(_hit.point.x, transform.position.y, 0f) + Vector3.left * _dsLenghtRayCast,
+                transform.position + _dsEdegeRayCast + Vector3.left * _dsLenghtRayCast);
+            Debug.Log(_newPosition);
+            transform.position = new Vector3(transform.position.x , transform.position.y - _newPosition - 2f, transform.position.z);
+            c_rigi2d.velocity = new Vector2(velocityX, c_rigi2d.velocity.y);
+        }
+
+        _hit = Physics2D.Raycast(transform.position - _dsRInerRayCast + Vector3.right * _dsRLenghtRayCast, Vector3.up, _dsRLenghtRayCast, _dsLayers);
+        if (_hit.collider != null)
+        {
+            float _newPosition = Vector3.Distance(new Vector3(_hit.point.x, transform.position.y, 0f) + Vector3.right * _dsRLenghtRayCast,
+                transform.position - _dsREdegeRayCast + Vector3.right * _dsRLenghtRayCast);
+            Debug.Log(_newPosition);
+            transform.position = new Vector3(transform.position.x, transform.position.y + _newPosition - 2f, transform.position.z);
+            c_rigi2d.velocity = new Vector2(velocityX, c_rigi2d.velocity.y);
+            return;
+        }
+
+        _hit = Physics2D.Raycast(transform.position + _dsInerRayCast + Vector3.right * _dsLenghtRayCast, Vector3.down, _dsRLenghtRayCast, _dsLayers);
+        if (_hit.collider != null)
+        {
+            float _newPosition = Vector3.Distance(new Vector3(_hit.point.x, transform.position.y, 0f) + Vector3.left * _dsRLenghtRayCast,
+                transform.position + _dsREdegeRayCast + Vector3.left * _dsRLenghtRayCast);
+            Debug.Log(_newPosition);
+            transform.position = new Vector3(transform.position.x, transform.position.y - _newPosition - 2f, transform.position.z);
+            c_rigi2d.velocity = new Vector2(velocityX, c_rigi2d.velocity.y);
+        }
+    }
     private void Flip()
     {
-        if (_facinRight)
+        if (_faceRight)
         {
             c_sprite.flipX = true;
-            _facinRight = false;
+            _faceRight = false;
         }
         else
         {
             c_sprite.flipX = false;
-            _facinRight = true;
+            _faceRight = true;
         }
     }
-    private void OnDrawGizmos()
-    {
-        //ground check
-        Gizmos.color = Color.red;
-        Gizmos.DrawLine(transform.position, transform.position + Vector3.down * _groundLenght);
 
-        //wall check
-        Gizmos.DrawCube(transform.position + new Vector3(-1 * _wallPosition.x, _wallPosition.y, _wallPosition.z), _wallSize);
-        Gizmos.DrawCube(transform.position + _wallPosition, _wallSize);
+    void OnDrawGizmos()
+    {
+        Gizmos.color = Color.red;
+        Gizmos.DrawWireSphere((Vector2)transform.position + _groundOffset, _groundRadius);
+        Gizmos.DrawWireSphere((Vector2)transform.position + _wallLefOffset, _wallLefRadius);
+        Gizmos.DrawWireSphere((Vector2)transform.position + _wallRightOffset, _wallRighRadius);
 
         //corner check
         Gizmos.DrawLine(transform.position + _ccEdegeRayCast, transform.position + _ccEdegeRayCast + Vector3.up * _ccLenghtRayCast);
@@ -373,6 +421,31 @@ public class CelesteMovement : MonoBehaviour
                         transform.position - _ccInerRayCast + Vector3.up * _ccLenghtRayCast + Vector3.left * _ccLenghtRayCast);
         Gizmos.DrawLine(transform.position + _ccInerRayCast + Vector3.up * _ccLenghtRayCast,
                         transform.position + _ccInerRayCast + Vector3.up * _ccLenghtRayCast + Vector3.right * _ccLenghtRayCast);
+
+
+        //dash check left
+        Gizmos.DrawLine(transform.position + _dsEdegeRayCast, transform.position + _dsEdegeRayCast + Vector3.left * _dsLenghtRayCast);
+        Gizmos.DrawLine(transform.position - _dsEdegeRayCast, transform.position - _dsEdegeRayCast + Vector3.left * _dsLenghtRayCast);
+        Gizmos.DrawLine(transform.position + _dsInerRayCast, transform.position + _dsInerRayCast + Vector3.left * _dsLenghtRayCast);
+        Gizmos.DrawLine(transform.position - _dsInerRayCast, transform.position - _dsInerRayCast + Vector3.left * _dsLenghtRayCast);
+
+        //dash distance check left
+        Gizmos.DrawLine(transform.position - _dsInerRayCast + Vector3.left * _dsLenghtRayCast,
+                        transform.position - _dsInerRayCast + Vector3.left * _dsLenghtRayCast + Vector3.down * _dsLenghtRayCast);
+        Gizmos.DrawLine(transform.position + _dsInerRayCast + Vector3.left * _dsLenghtRayCast,
+                        transform.position + _dsInerRayCast + Vector3.left * _dsLenghtRayCast + Vector3.up * _dsLenghtRayCast);
+
+        //dash check right
+        Gizmos.DrawLine(transform.position + _dsREdegeRayCast, transform.position + _dsREdegeRayCast + Vector3.right * _dsRLenghtRayCast);
+        Gizmos.DrawLine(transform.position - _dsREdegeRayCast, transform.position - _dsREdegeRayCast + Vector3.right * _dsRLenghtRayCast);
+        Gizmos.DrawLine(transform.position + _dsRInerRayCast, transform.position + _dsRInerRayCast + Vector3.right * _dsRLenghtRayCast);
+        Gizmos.DrawLine(transform.position - _dsRInerRayCast, transform.position - _dsRInerRayCast + Vector3.right * _dsRLenghtRayCast);
+
+        //dash distance check right
+        Gizmos.DrawLine(transform.position - _dsRInerRayCast + Vector3.right * _dsRLenghtRayCast,
+                        transform.position - _dsRInerRayCast + Vector3.right * _dsRLenghtRayCast + Vector3.down * _dsRLenghtRayCast);
+        Gizmos.DrawLine(transform.position + _dsRInerRayCast + Vector3.right * _dsRLenghtRayCast,
+                        transform.position + _dsRInerRayCast + Vector3.right * _dsRLenghtRayCast + Vector3.up * _dsRLenghtRayCast);
     }
     #endregion
 }
