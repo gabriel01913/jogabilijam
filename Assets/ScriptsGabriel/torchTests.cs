@@ -22,12 +22,14 @@ public class torchTests : MonoBehaviour
 
     Vector2 _point;
 
+    InputHandler _Inputs;
     Rigidbody2D c_rigi2d;
     // Start is called before the first frame update
     void Awake()
     {
         _celeste = _player.GetComponent<CelesteMovement>();
         c_rigi2d = GetComponent<Rigidbody2D>();
+        _Inputs = _player.GetComponent<InputHandler>();
     }
     // Update is called once per frame
     void Update()
@@ -37,7 +39,7 @@ public class torchTests : MonoBehaviour
         _torchPos = transform.position;
 
         CheckPoint();
-        if (Input.GetButton("Torch") && !_onMove)
+        if (_Inputs.GetButtonDown("Torch") && !_onMove)
         {
             TorchThrow(_playerDir);
         }        
