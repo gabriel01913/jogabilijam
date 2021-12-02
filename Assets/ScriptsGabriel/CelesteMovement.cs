@@ -59,7 +59,7 @@ public class CelesteMovement : MonoBehaviour
     [Header("Debug")]
     [Space]    
     [SerializeField] private Vector2 _velocity;
-    [SerializeField] private Vector2 _direction;
+    public Vector3 _direction { get; private set; }
     [SerializeField] bool _onGround = true;
     [SerializeField] bool _canMove = true;
     [SerializeField] bool _canJump = true;
@@ -67,7 +67,7 @@ public class CelesteMovement : MonoBehaviour
     [SerializeField] bool _dashing;
     [SerializeField] bool _wallSlide;
     [SerializeField] bool _wallJumping;
-    [SerializeField] bool _faceRight = true;
+    [SerializeField] public bool _faceRight { get; private set; }
     [SerializeField] private bool _dashCorrection;
     [SerializeField] private bool _dashRCorrection;
     private float _horizontal;
@@ -85,6 +85,7 @@ public class CelesteMovement : MonoBehaviour
     {
         c_rigi2d = GetComponent<Rigidbody2D>();
         c_sprite = GetComponentInChildren<SpriteRenderer>();
+        _faceRight = true;
     }
 
     private void Update()
