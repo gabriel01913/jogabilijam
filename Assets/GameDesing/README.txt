@@ -1,0 +1,6 @@
+- Blocko preto, chão e parede
+- Cinza é fundo
+- azul é agua
+- vermelho espinho
+- Linha Laranja o caminho da tocha
+- Linha verde o caminho do jogador
