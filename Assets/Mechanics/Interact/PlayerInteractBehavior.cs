@@ -1,6 +1,6 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.InputSystem;
+
 
 public class PlayerInteractBehavior : MonoBehaviour
 {
@@ -8,27 +8,19 @@ public class PlayerInteractBehavior : MonoBehaviour
   [Header("Settings")]
   public Transform interactionPivot;
   public float interactionRadius = 1f;
-
   public LayerMask interactLayer;
 
-  public string button = "";
 
   public static bool isMechanicEnabled = true;
 
-  // Update is called once per frame
-  void Update()
+  public void TryInteract(InputAction.CallbackContext context)
   {
-    if (isMechanicEnabled)
-    {
-      if (Input.GetButtonDown(button))
-      {
-        TryInteract();
-      }
-    }
-  }
+    if (!context.performed)
+      return;
 
-  void TryInteract()
-  {
+    if (!isMechanicEnabled)
+      return;
+
     Collider2D[] colliders = Physics2D.OverlapCircleAll(interactionPivot.position, interactionRadius, interactLayer);
     if (colliders.Length > 0)
     {

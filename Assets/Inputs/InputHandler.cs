@@ -100,7 +100,6 @@ public class InputHandler : MonoBehaviour
     public void Aim(InputAction.CallbackContext context)
     {
         string name = _inputs.currentControlScheme;
-        Debug.Log(name);
         if(name == "Keyboard")
         {
             var mousePosition = _inputs.actions["aim"].ReadValue<Vector2>();

@@ -8,9 +8,11 @@ public class TorchBehavior : MonoBehaviour
   [SerializeField] float maxDuration = 5f;
   [SerializeField] float timeLeft = 5f;
 
-  public float TimeLeft { get { return timeLeft; } }
+  public float TimeLeft => timeLeft;
 
   public UnityEvent OnExtinguish;
+  public UnityEvent OnRefill;
+  public UnityEvent OnDamage;
 
   bool isExtinguished = false;
   void Update()
@@ -23,10 +25,14 @@ public class TorchBehavior : MonoBehaviour
     }
   }
 
-  public void Refill()
+  public void Refill(int amountInPercentage)
   {
-    timeLeft = maxDuration;
-    isExtinguished = false;
+    timeLeft = maxDuration * (amountInPercentage / 100f);
+  }
+
+  public void Decrease(int amountInPercentage)
+  {
+    timeLeft -= maxDuration * (amountInPercentage / 100f);
   }
 
 }
