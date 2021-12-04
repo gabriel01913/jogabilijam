@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.InputSystem;
 
 
@@ -10,8 +11,46 @@ public class PlayerInteractBehavior : MonoBehaviour
   public float interactionRadius = 1f;
   public LayerMask interactLayer;
 
+  public bool isMechanicEnabled = true;
 
-  public static bool isMechanicEnabled = true;
+  [Header("Events")]
+  public UnityEvent<string> onNewInteractiveObjectInRange;
+  public UnityEvent onInteractiveObjectLeftRange;
+
+  [SerializeField] InteractiveObject currentInteractiveObject;
+
+
+
+  private void Update()
+  {
+    if (isMechanicEnabled)
+    {
+      checkCanInteract();
+    }
+  }
+
+  void checkCanInteract()
+  {
+    Collider2D[] colliders = Physics2D.OverlapCircleAll(interactionPivot.position, interactionRadius, interactLayer);
+
+    if (colliders.Length > 0 && colliders[0].TryGetComponent(out InteractiveObject interactiveObject))
+    {
+      if (currentInteractiveObject != interactiveObject)
+      {
+        currentInteractiveObject = interactiveObject;
+        onNewInteractiveObjectInRange?.Invoke(currentInteractiveObject.name);
+      }
+    }
+    else
+    {
+      if (currentInteractiveObject != null)
+      {
+        onInteractiveObjectLeftRange?.Invoke();
+      }
+      currentInteractiveObject = null;
+    }
+
+  }
 
   public void TryInteract(InputAction.CallbackContext context)
   {
@@ -21,12 +60,7 @@ public class PlayerInteractBehavior : MonoBehaviour
     if (!isMechanicEnabled)
       return;
 
-    Collider2D[] colliders = Physics2D.OverlapCircleAll(interactionPivot.position, interactionRadius, interactLayer);
-    if (colliders.Length > 0)
-    {
-      InteractiveObject interactiveObject = colliders[0].gameObject.GetComponent<InteractiveObject>();
-      interactiveObject.Interact();
-    }
+    currentInteractiveObject?.Interact();
   }
 
 
@@ -37,5 +71,10 @@ public class PlayerInteractBehavior : MonoBehaviour
       Gizmos.color = Color.yellow;
       Gizmos.DrawWireSphere(interactionPivot.position, interactionRadius);
     }
+  }
+
+  public void SetIsMechanicEnabled(bool isEnabled)
+  {
+    isMechanicEnabled = isEnabled;
   }
 }

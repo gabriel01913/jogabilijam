@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class QuoteObject : MonoBehaviour
 {
@@ -19,6 +20,8 @@ public class QuoteObject : MonoBehaviour
   private string text;
 
   private QuoteController quoteController;
+
+
 
   private void Awake()
   {
@@ -38,7 +41,15 @@ public class QuoteObject : MonoBehaviour
 
   public void ShowQuote()
   {
-    Debug.Log(FormatedText());
+    var dialogController = FindObjectOfType<DialogController>();
+    if (dialogController)
+    {
+      dialogController.ShowDialog(FormatedText());
+    }
+    else
+    {
+      Debug.LogError("No DialogController found");
+    }
   }
 
   string FormatedText()

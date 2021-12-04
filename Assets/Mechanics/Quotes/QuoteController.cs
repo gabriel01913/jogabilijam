@@ -18,7 +18,13 @@ public class QuoteController : MonoBehaviour
   private void Awake()
   {
     CSVToQuoteList();
-    seed = Random.Range(0, 1000); // gerar aleatóriamente ou carregar do save
+    seed = PlayerPrefs.GetInt("seed", -1);
+    if (seed == -1)
+    {
+      seed = Random.Range(0, 1000);
+      PlayerPrefs.SetInt("seed", seed);
+    }
+
     Random.InitState(seed);
   }
 
