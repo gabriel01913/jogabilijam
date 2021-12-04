@@ -5,6 +5,8 @@ using UnityEngine;
 public class torchTests : MonoBehaviour
 {
     [Header("Variables")]
+    [SerializeField] Vector3 _torchIniPosition;
+    [SerializeField] float _rotateSpeed = 10f;
     [SerializeField] float _force = 30f;
     [SerializeField] float _freezeReturning = 0.5f;
     public GameObject _player;
@@ -19,6 +21,7 @@ public class torchTests : MonoBehaviour
     [SerializeField] bool _stoped;
     [SerializeField] bool _returning;
     float _returningTime;
+   
 
     Vector2 _point;
 
@@ -36,7 +39,7 @@ public class torchTests : MonoBehaviour
     {        
         _playerPos = _player.transform.position;
         _playerDir = _celeste._direction;
-        _torchPos = transform.position;
+        _torchPos = transform.position;        
 
         CheckPoint();
         if (_Inputs.GetButtonDown("Torch") && !_onMove)
@@ -48,6 +51,10 @@ public class torchTests : MonoBehaviour
     private void FixedUpdate()
     {
         if (_stoped) StartCoroutine(Returning());
+        if(_moving || _returning)
+        {
+            
+        }
     }
 
     #region TorchMovement
@@ -73,13 +80,18 @@ public class torchTests : MonoBehaviour
         if (_moving)
         {
             c_rigi2d.AddForce(dir * _force, ForceMode2D.Impulse);
+            transform.Rotate(0, 0, _rotateSpeed);
         }
     }
 
     IEnumerator Returning()
     {
         yield return new WaitForSeconds(_freezeReturning);
-        transform.position = Vector3.Lerp(transform.position, _playerPos, _returningTime += Time.fixedDeltaTime);        
+        transform.position = Vector3.Lerp(transform.position, _playerPos, _returningTime += Time.fixedDeltaTime);
+        if (!_returning)
+        {
+            yield break;
+        }
     }
     #endregion
     #region CheckCollision
@@ -109,25 +121,32 @@ public class torchTests : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if(collision.tag == "Player" && !_moving)
+        StopAllCoroutines();
+        if (collision.tag == "Player" && _returning)
         {
             _returning = false;
             _moving = false;
             _stoped = false;
             c_rigi2d.isKinematic = true;
             transform.parent = _player.transform;
-            transform.position = _player.transform.position;
             _onMove = false;
 
         }
 
         if (_moving && collision.gameObject.layer == LayerMask.NameToLayer("Wall") || collision.gameObject.layer == LayerMask.NameToLayer("Ground"))
         {
+            transform.rotation = Quaternion.Euler(Vector3.zero);
             _moving = false;
             c_rigi2d.velocity = Vector2.zero;
             _stoped = true;
             _returningTime = 0f;
         }
+        if(collision.tag == "Player" && !_onMove)
+        {
+            StopAllCoroutines();
+            transform.rotation = Quaternion.Euler(Vector3.zero);
+            transform.localPosition = _torchIniPosition;
+        }        
     }
     #endregion
     #region QOL

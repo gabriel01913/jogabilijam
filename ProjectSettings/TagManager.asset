@@ -41,3 +41,18 @@ TagManager:
   - name: Default
     uniqueID: 0
     locked: 0
+  - name: Paralax1
+    uniqueID: 4165010195
+    locked: 0
+  - name: Paralax2
+    uniqueID: 3380637831
+    locked: 0
+  - name: Paralax3
+    uniqueID: 1885166785
+    locked: 0
+  - name: Paralax4
+    uniqueID: 4141632309
+    locked: 0
+  - name: Water
+    uniqueID: 3483639241
+    locked: 0

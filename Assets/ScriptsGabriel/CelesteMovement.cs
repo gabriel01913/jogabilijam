@@ -13,7 +13,7 @@ public class CelesteMovement : MonoBehaviour
     [SerializeField] private float _jumpMaxSpeed = 15f;
     [SerializeField] private float _jumpAcell = 8f;
     private float _jumpSpeed;
-    private float _jumpTimer;    
+    public float _jumpTimer { get; private set; }    
     [Header("Dash")]
     [SerializeField] private float _dashSpeed = 10f;
     [SerializeField] float _dashDuration = 5f;
@@ -59,26 +59,26 @@ public class CelesteMovement : MonoBehaviour
     [SerializeField] private float _wallJumpBufferTimer = .1f;// A little help to jump close to the wall, in seconds
     private float _wallJumpBufferCounter;
     [Header("Debug")]
-    [Space]    
-    [SerializeField] private Vector2 _velocity;
-    public Vector3 _direction { get; private set; }
-    [SerializeField] bool _onGround = true;
+    [Space]   
     [SerializeField] bool _canMove = true;
     [SerializeField] bool _canJump = true;
-    [SerializeField] bool _jumping;
-    [SerializeField] bool _dashing;
+    public bool _onGround { get; private set; }
+    public bool _jumping { get; private set; }
+    public bool _dashing { get; private set; }
     [SerializeField] bool _Hasdashed;
-    [SerializeField] bool _wallSlide;
+    public bool _wallSlide { get; private set; }
     [SerializeField] bool _wallJumping;
-    [SerializeField] public bool _faceRight { get; private set; }
+    public bool _faceRight { get; private set; }
     [SerializeField] private bool _cornerCorrection;
     [SerializeField] private bool _dashCorrection;
     [SerializeField] private bool _dashRCorrection;
-    private float _horizontal;
-    private float _vertical;
+    float _horizontal;
+    float _vertical;
     Vector2 _wallDir;
     [SerializeField] bool _wallLeft;
     [SerializeField] bool _wallRight;
+    public Vector2 _velocity { get; private set; }
+    public Vector3 _direction { get; private set; }
     #endregion
 
     //Components
@@ -396,14 +396,15 @@ public class CelesteMovement : MonoBehaviour
     }
     private void Flip()
     {
+        Vector3 trans = transform.localScale;
         if (_faceRight)
-        {
-            c_sprite.flipX = true;
+        {            
+            transform.localScale = new Vector3(trans.x * -1, trans.y, trans.z);
             _faceRight = false;
         }
         else
         {
-            c_sprite.flipX = false;
+            transform.localScale = new Vector3(trans.x * -1, trans.y, trans.z);
             _faceRight = true;
         }
     }
