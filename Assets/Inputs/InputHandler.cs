@@ -5,6 +5,8 @@ using UnityEngine.InputSystem;
 
 public class InputHandler : MonoBehaviour
 {
+    public GameObject _camera;
+    Camera _mainCamera;
     PlayerInput _inputs;
     InputAction jump;
     InputAction dash;
@@ -18,11 +20,15 @@ public class InputHandler : MonoBehaviour
     bool _TorchDown;
     bool _TorchHeld;
     bool _TorchUp;
-    float _horizontal;
-    float _vertical;
+    public float _horizontal;
+    public float _vertical;
+    Vector2 _mouseWolrd;
+    public float _aimHorizontal;
+    public float _aimVertical;
     private void Awake()
     {
         _inputs = GetComponent<PlayerInput>();
+        _mainCamera = _camera.GetComponent<Camera>();
     }
     // Start is called before the first frame update
     void Start()
@@ -30,6 +36,13 @@ public class InputHandler : MonoBehaviour
         jump = _inputs.actions["Jump"];
         dash = _inputs.actions["Dash"];
         torch = _inputs.actions["Torch"];
+    }
+    private void Update()
+    {
+        var mousePosition = _inputs.actions["aim"].ReadValue<Vector2>();
+        _mouseWolrd = _mainCamera.ScreenToWorldPoint(mousePosition);
+        _aimHorizontal = _mouseWolrd.x;
+        _aimVertical = _mouseWolrd.y;
     }
     #region Gambiara
     public void ButtonsStart()
@@ -127,6 +140,14 @@ public class InputHandler : MonoBehaviour
         if (axis == "Vertical")
         {
             axisF = _vertical;
+        }
+        if (axis == "AimHorizontal")
+        {
+            axisF = _aimHorizontal;
+        }
+        if (axis == "AimVertical")
+        {
+            axisF = _aimVertical;
         }
         return axisF;
     }

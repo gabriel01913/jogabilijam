@@ -38,7 +38,7 @@ public class torchTests : MonoBehaviour
     void Update()
     {        
         _playerPos = _player.transform.position;
-        _playerDir = _celeste._direction;
+        _playerDir = _celeste._aimDirection;
         _torchPos = transform.position;        
 
         CheckPoint();

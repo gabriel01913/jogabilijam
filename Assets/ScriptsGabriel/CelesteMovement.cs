@@ -13,7 +13,7 @@ public class CelesteMovement : MonoBehaviour
     [SerializeField] private float _jumpMaxSpeed = 15f;
     [SerializeField] private float _jumpAcell = 8f;
     private float _jumpSpeed;
-    public float _jumpTimer { get; private set; }    
+    [HideInInspector]public float _jumpTimer;    
     [Header("Dash")]
     [SerializeField] private float _dashSpeed = 10f;
     [SerializeField] float _dashDuration = 5f;
@@ -62,23 +62,27 @@ public class CelesteMovement : MonoBehaviour
     [Space]   
     [SerializeField] bool _canMove = true;
     [SerializeField] bool _canJump = true;
-    public bool _onGround { get; private set; }
-    public bool _jumping { get; private set; }
-    public bool _dashing { get; private set; }
+    public bool _onGround;
+    public bool _jumping;
+    public bool _dashing;
     [SerializeField] bool _Hasdashed;
-    public bool _wallSlide { get; private set; }
+    public bool _wallSlide;
     [SerializeField] bool _wallJumping;
-    public bool _faceRight { get; private set; }
+    public bool _faceRight;
     [SerializeField] private bool _cornerCorrection;
     [SerializeField] private bool _dashCorrection;
     [SerializeField] private bool _dashRCorrection;
     float _horizontal;
     float _vertical;
+    float _aimHorizontal;
+    float _aimVertical;
     Vector2 _wallDir;
     [SerializeField] bool _wallLeft;
     [SerializeField] bool _wallRight;
-    public Vector2 _velocity { get; private set; }
-    public Vector3 _direction { get; private set; }
+    public Vector2 _velocity;
+    public Vector3 _direction;
+    public Vector3 _aimDirection;
+    Vector3 _mousePos;
     #endregion
 
     //Components
@@ -121,6 +125,9 @@ public class CelesteMovement : MonoBehaviour
 
     void CheckInputs()
     {
+        //get velocity in the start of frame
+        _velocity = c_rigi2d.velocity;
+
         if (_onGround)
         {
             _coyoteTimerCounter = _coyoteTimer;
@@ -131,16 +138,14 @@ public class CelesteMovement : MonoBehaviour
         }
 
         //running
-        _velocity = c_rigi2d.velocity;
-        //_horizontal = Input.GetAxisRaw("Horizontal");
         _horizontal = _Inputs.GetAxisRaw("Horizontal");
-        if (_horizontal > -0.02f && _horizontal < 0.02f)
-        {
-            _horizontal = 0f;
-        }
-        //_vertical = Input.GetAxisRaw("Vertical");
         _vertical = _Inputs.GetAxisRaw("Vertical");
         _direction = new Vector2(_horizontal, _vertical);
+        _aimHorizontal = _Inputs.GetAxisRaw("AimHorizontal");
+        _aimVertical = _Inputs.GetAxisRaw("AimVertical");
+        _mousePos = new Vector3(_aimHorizontal, _aimVertical, 0f);
+        _aimDirection = _mousePos - transform.position;
+        _aimDirection = _aimDirection.normalized;
 
         //jump Input.GetButtonDown("Jump")
         if (_Inputs.GetButtonDown("Jump"))

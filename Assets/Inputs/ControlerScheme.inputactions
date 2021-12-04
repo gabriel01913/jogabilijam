@@ -36,6 +36,14 @@
                     "expectedControlType": "Button",
                     "processors": "",
                     "interactions": ""
+                },
+                {
+                    "name": "Aim",
+                    "type": "Value",
+                    "id": "19a1649a-21e4-4fff-9ad6-2554c3e9cc5a",
+                    "expectedControlType": "Vector2",
+                    "processors": "",
+                    "interactions": ""
                 }
             ],
             "bindings": [
@@ -53,7 +61,7 @@
                 {
                     "name": "up",
                     "id": "37ccf5c6-163f-4cbb-b834-6fcec510991c",
-                    "path": "<Keyboard>/upArrow",
+                    "path": "<Keyboard>/w",
                     "interactions": "",
                     "processors": "",
                     "groups": "Keyboard",
@@ -64,7 +72,7 @@
                 {
                     "name": "down",
                     "id": "2811e36e-3523-4ea0-b52f-eb4b01a8a81a",
-                    "path": "<Keyboard>/downArrow",
+                    "path": "<Keyboard>/s",
                     "interactions": "",
                     "processors": "",
                     "groups": "Keyboard",
@@ -75,7 +83,7 @@
                 {
                     "name": "left",
                     "id": "70efd610-510a-44f2-b48f-0f5b434a6939",
-                    "path": "<Keyboard>/leftArrow",
+                    "path": "<Keyboard>/a",
                     "interactions": "",
                     "processors": "",
                     "groups": "Keyboard",
@@ -86,7 +94,7 @@
                 {
                     "name": "right",
                     "id": "d32bbe02-0e60-4cac-8170-8084aa370f33",
-                    "path": "<Keyboard>/rightArrow",
+                    "path": "<Keyboard>/d",
                     "interactions": "",
                     "processors": "",
                     "groups": "Keyboard",
@@ -108,7 +116,7 @@
                 {
                     "name": "",
                     "id": "9d36423d-96a0-4a96-ae61-011e1ae2f9b9",
-                    "path": "<Keyboard>/z",
+                    "path": "<Keyboard>/space",
                     "interactions": "",
                     "processors": "",
                     "groups": "Keyboard",
@@ -130,7 +138,7 @@
                 {
                     "name": "",
                     "id": "834f0040-b717-4730-945c-35cfec2c5018",
-                    "path": "<Keyboard>/x",
+                    "path": "<Keyboard>/shift",
                     "interactions": "",
                     "processors": "",
                     "groups": "Keyboard",
@@ -152,7 +160,7 @@
                 {
                     "name": "",
                     "id": "a394a035-dd63-4c7b-b368-238589164bd0",
-                    "path": "<Keyboard>/c",
+                    "path": "<Mouse>/leftButton",
                     "interactions": "",
                     "processors": "",
                     "groups": "Keyboard",
@@ -170,6 +178,28 @@
                     "action": "Torch",
                     "isComposite": false,
                     "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "260ab768-cb73-4fb8-a9df-16046e324ac3",
+                    "path": "<Mouse>/position",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Keyboard",
+                    "action": "Aim",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "8f1f1ee5-dc0c-44e2-a492-4b98ca307589",
+                    "path": "<Gamepad>/rightStick",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Gamepad",
+                    "action": "Aim",
+                    "isComposite": false,
+                    "isPartOfComposite": false
                 }
             ]
         }
@@ -181,6 +211,11 @@
             "devices": [
                 {
                     "devicePath": "<Keyboard>",
+                    "isOptional": false,
+                    "isOR": false
+                },
+                {
+                    "devicePath": "<Mouse>",
                     "isOptional": false,
                     "isOR": false
                 }
