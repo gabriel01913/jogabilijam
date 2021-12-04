@@ -5,11 +5,15 @@ public class TorchBehavior : MonoBehaviour
 {
 
 
+  [Header("Settings")]
+
   [SerializeField] float maxDuration = 5f;
   [SerializeField] float timeLeft = 5f;
 
   public float TimeLeft => timeLeft;
-
+  public float Percentage => (timeLeft / maxDuration) * 100;
+  [Space]
+  [Header("Events")]
   public UnityEvent OnExtinguish;
   public UnityEvent OnRefill;
   public UnityEvent OnDamage;
@@ -18,6 +22,7 @@ public class TorchBehavior : MonoBehaviour
   void Update()
   {
     timeLeft -= Time.deltaTime;
+    timeLeft = Mathf.Clamp(timeLeft, 0, maxDuration);
     if (!isExtinguished && timeLeft <= 0)
     {
       isExtinguished = true;
@@ -27,12 +32,18 @@ public class TorchBehavior : MonoBehaviour
 
   public void Refill(int amountInPercentage)
   {
-    timeLeft = maxDuration * (amountInPercentage / 100f);
+    timeLeft = Mathf.Clamp(timeLeft + maxDuration * (amountInPercentage / 100f), 0, maxDuration);
   }
 
   public void Decrease(int amountInPercentage)
   {
-    timeLeft -= maxDuration * (amountInPercentage / 100f);
+    timeLeft = Mathf.Clamp(timeLeft - maxDuration * (amountInPercentage / 100f), 0, maxDuration);
+  }
+
+
+  private void OnValidate()
+  {
+    Refill(100);
   }
 
 }
