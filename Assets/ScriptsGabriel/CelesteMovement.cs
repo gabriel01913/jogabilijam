@@ -81,7 +81,7 @@ public class CelesteMovement : MonoBehaviour
     [SerializeField] bool _wallRight;
     public Vector2 _velocity;
     public Vector3 _direction;
-    public Vector3 _aimDirection;
+    public Vector2 _aimDirection;
     Vector3 _mousePos;
     #endregion
 
@@ -143,9 +143,7 @@ public class CelesteMovement : MonoBehaviour
         _direction = new Vector2(_horizontal, _vertical);
         _aimHorizontal = _Inputs.GetAxisRaw("AimHorizontal");
         _aimVertical = _Inputs.GetAxisRaw("AimVertical");
-        _mousePos = new Vector3(_aimHorizontal, _aimVertical, 0f);
-        _aimDirection = _mousePos - transform.position;
-        _aimDirection = _aimDirection.normalized;
+        _aimDirection = new Vector2(_aimHorizontal, _aimVertical);
 
         //jump Input.GetButtonDown("Jump")
         if (_Inputs.GetButtonDown("Jump"))

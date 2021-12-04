@@ -37,13 +37,6 @@ public class InputHandler : MonoBehaviour
         dash = _inputs.actions["Dash"];
         torch = _inputs.actions["Torch"];
     }
-    private void Update()
-    {
-        var mousePosition = _inputs.actions["aim"].ReadValue<Vector2>();
-        _mouseWolrd = _mainCamera.ScreenToWorldPoint(mousePosition);
-        _aimHorizontal = _mouseWolrd.x;
-        _aimVertical = _mouseWolrd.y;
-    }
     #region Gambiara
     public void ButtonsStart()
     {
@@ -103,6 +96,25 @@ public class InputHandler : MonoBehaviour
     {
         _horizontal = context.ReadValue<Vector2>().x;
         _vertical = context.ReadValue<Vector2>().y;
+    }
+    public void Aim(InputAction.CallbackContext context)
+    {
+        string name = _inputs.currentControlScheme;
+        Debug.Log(name);
+        if(name == "Keyboard")
+        {
+            var mousePosition = _inputs.actions["aim"].ReadValue<Vector2>();
+            _mouseWolrd = _mainCamera.ScreenToWorldPoint(mousePosition);
+            Vector2 dir = new Vector3(_mouseWolrd.x - transform.position.x , _mouseWolrd.y - transform.position.y).normalized;
+            _aimHorizontal = dir.x;
+            _aimVertical = dir.y;         
+                    
+        }
+        else if(name == "Gamepad")
+        {
+            _aimHorizontal = context.ReadValue<Vector2>().x;
+            _aimVertical = context.ReadValue<Vector2>().y;
+        }
     }
     #endregion
     #region Acess Methods
