@@ -4,14 +4,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 
-public class QuoteObject : MonoBehaviour
+public class QuoteObject : MonoBehaviourID
 {
-
-  [SerializeField]
-  private string _id = Guid.NewGuid().ToString();
-
-  public string ID { get => _id; }
-
 
   [SerializeField]
   private int index;
@@ -22,11 +16,14 @@ public class QuoteObject : MonoBehaviour
   private QuoteController quoteController;
 
 
+  public bool wasDiscovered = false;
 
   private void Awake()
   {
     index = 0;
     text = "";
+
+    wasDiscovered = PlayerPrefs.GetInt($"QO_{ID}_wasDiscovered", 0) == 1;
   }
 
   public string Setup(QuoteController quoteController, int index, string text)
@@ -35,7 +32,7 @@ public class QuoteObject : MonoBehaviour
     this.text = text;
     this.quoteController = quoteController;
 
-    return _id;
+    return ID;
   }
 
 
@@ -45,6 +42,11 @@ public class QuoteObject : MonoBehaviour
     if (dialogController)
     {
       dialogController.ShowDialog(FormatedText());
+      if (!wasDiscovered)
+      {
+        wasDiscovered = true;
+        PlayerPrefs.SetInt($"QO_{ID}_wasDiscovered", 1);
+      }
     }
     else
     {

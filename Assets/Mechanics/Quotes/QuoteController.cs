@@ -8,17 +8,17 @@ public class QuoteController : MonoBehaviour
   public TextAsset quotesCSV;
 
   [SerializeField] List<string> quoteList;
+  public int totalOfQuotes => quoteObjects.Count;
+  public int totalOfDiscoverdQuotes => quoteObjects.FindAll(q => q.wasDiscovered).Count;
 
   List<QuoteObject> quoteObjects;
   HashSet<int> usedQuotes;
-
-  [SerializeField] int seed = 10; // mais para o sistema de save no futuro
 
 
   private void Awake()
   {
     CSVToQuoteList();
-    seed = PlayerPrefs.GetInt("seed", -1);
+    int seed = PlayerPrefs.GetInt("seed", -1);
     if (seed == -1)
     {
       seed = Random.Range(0, 1000);
@@ -40,6 +40,9 @@ public class QuoteController : MonoBehaviour
 
       string objectId = quoteObject.Setup(this, quoteNumber, quote);
     }
+
+    Debug.Log("Total of quotes: " + totalOfQuotes);
+    Debug.Log("Total of discovered quotes: " + totalOfDiscoverdQuotes);
   }
 
   int GetAvaliableQuoteFromList()
