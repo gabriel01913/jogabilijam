@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 
 public class torchTests : MonoBehaviour
@@ -27,26 +28,34 @@ public class torchTests : MonoBehaviour
     [SerializeField] bool _returning;
     Coroutine _coroutine;
     Vector2 _point;
+    Vector2 _mousePos;
+    PlayerInput _playerInput;
     InputHandler _Inputs;
     Rigidbody2D c_rigi2d;
-    BoxCollider2D c_box;
-    ContactPoint2D[] contacts;
     // Start is called before the first frame update
     void Awake()
     {
         _celeste = _player.GetComponent<CelesteMovement>();
         c_rigi2d = GetComponent<Rigidbody2D>();
         _Inputs = _player.GetComponent<InputHandler>();
-        c_box = GetComponent<BoxCollider2D>();
+        _playerInput = _player.GetComponent<PlayerInput>();
     }
     // Update is called once per frame
     void Update()
     {
         CheckCollision();
         CheckPoint();        
-        _playerPos = _player.transform.position;
-        _aimDir = _celeste._aimDirection.normalized;
-        _torchPos = transform.position;       
+        _playerPos = _player.transform.position;        
+        _torchPos = transform.position;
+        if(_playerInput.currentControlScheme == "Keyboard")
+        {
+            _mousePos = _celeste._aimDirection;
+            _aimDir = _mousePos - (Vector2)transform.position;
+        }
+        else
+        {
+            _aimDir = _celeste._aimDirection.normalized;
+        }
         if (_Inputs.GetButtonDown("Torch") && !_hasThrow)
         {
             _hasThrow = true;            
@@ -94,7 +103,6 @@ public class torchTests : MonoBehaviour
         }
         _coroutine = StartCoroutine(Moving(_moveDir));
     }
-
     void GetThrow()
     {
         if (_coroutine != null)
@@ -109,6 +117,10 @@ public class torchTests : MonoBehaviour
         _stoped = false;
         transform.parent = _player.transform;
         transform.localPosition = _torchIniPosition;
+        if (!_celeste._onGround)
+        {
+            _celeste._dashCounter = 1f;
+        }
     }
     IEnumerator Moving(Vector2 dir)
     {
@@ -141,7 +153,7 @@ public class torchTests : MonoBehaviour
         }
         _hit = Physics2D.BoxCast(new Vector3(transform.position.x + _boxOffset.x, transform.position.y + _boxOffset.y, 0f),
                             _boxSize, 0f, Vector2.left, 0f, _layerMask);
-        if (_hit.collider != null && !_stoped)
+        if (_hit.collider != null && !_stoped && _hasThrow)
         {
             Stop();
             Vector3 newpos = new Vector3(transform.position.x - _hit.point.x, transform.position.y - _hit.point.y, 0f);

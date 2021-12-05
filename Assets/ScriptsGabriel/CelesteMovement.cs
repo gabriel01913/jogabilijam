@@ -12,12 +12,15 @@ public class CelesteMovement : MonoBehaviour
     [SerializeField] private float _jumpMinSpeed = 10f;
     [SerializeField] private float _jumpMaxSpeed = 13f;
     [SerializeField] private float _jumpAcell = 0f;
+    [SerializeField] private float _graceTime = 0.1f;
     private float _jumpSpeed;
+    public float _jumpTimes = 2f;
+    float _jumpCounter;
     [HideInInspector]public float _jumpTimer;    
     [Header("Dash")]
     [SerializeField] private float _dashSpeed = 5f;
     [SerializeField] float _dashDuration = 7f;
-    [SerializeField] float _dashCounter = 1f;
+    [SerializeField] public float _dashCounter = 1f;
     private float _dashTimer;        
     [Header("Air Control")]
     [SerializeField] private float _fallMultiplier = 12f; //multiply by gravity
@@ -123,10 +126,11 @@ public class CelesteMovement : MonoBehaviour
 
     void CheckInputs()
     {
+        Debug.Log(_jumpCounter);
         //get velocity in the start of frame
         _velocity = c_rigi2d.velocity;
 
-        if (_onGround)
+        if (_onGround || _jumpCounter > 0)
         {
             _coyoteTimerCounter = _coyoteTimer;
         }
@@ -148,11 +152,21 @@ public class CelesteMovement : MonoBehaviour
         {
             _jumpBufferCounter = _jumpBufferTimer;
             _wallJumpBufferCounter = _wallJumpBufferTimer;
+            _jumpCounter -= 1f;
         }
         else
         {
             _jumpBufferCounter -= Time.deltaTime;
             _wallJumpBufferCounter -= Time.deltaTime;      
+        }
+
+        //Walljump
+        if (!_onGround && (_wallLeft || _wallRight) && !_jumping && _wallJumpBufferCounter > 0)
+        {
+            _jumpTimer = 0f;
+            _jumpCounter = 1;
+            _wallJumping = true;
+            _wallDir = _wallLeft ? Vector2.right : Vector2.left;
         }
 
         if (_jumpBufferCounter > 0 && _coyoteTimerCounter > 0)
@@ -161,13 +175,6 @@ public class CelesteMovement : MonoBehaviour
             _jumping = true;
         }
 
-        //Walljump
-        if (!_onGround && (_wallLeft || _wallRight) && !_jumping && _wallJumpBufferCounter > 0)
-        {
-            _jumpTimer = 0f;
-            _wallJumping = true;
-            _wallDir = _wallLeft ? Vector2.right : Vector2.left;
-        }
 
         //dash Input.GetButtonDown("Dash")
         if (_Inputs.GetButtonDown("Dash") && !_dashing && _dashCounter > 0f)
@@ -190,9 +197,11 @@ public class CelesteMovement : MonoBehaviour
         }
 
         //wallslide
-        if((_wallLeft && _velocity.y < 0 && _horizontal < 0 || _wallRight && _velocity.y < 0 && _horizontal > 0) && !_wallJumping && !_onGround)
+        if((_wallLeft && _velocity.y <= 0 && _horizontal < 0 || _wallRight && _velocity.y <= 0 && _horizontal > 0) && !_wallJumping && !_onGround)
         {
+            _jumping = false;
             _wallSlide = true;
+            _jumpCounter = _jumpTimes;
         }
         else
         {
@@ -228,6 +237,8 @@ public class CelesteMovement : MonoBehaviour
             if (_jumpTimer >= _jumpDuration || !_Inputs.GetButton("Jump"))
             {
                 _jumping = false;
+                StartCoroutine(GraceTime(_graceTime));
+                
             }
         }
         else
@@ -240,8 +251,15 @@ public class CelesteMovement : MonoBehaviour
             if (_jumpTimer >= _jumpDuration || !_Inputs.GetButton("Jump"))
             {
                 _wallJumping = false;
+                StartCoroutine(GraceTime(_graceTime));
             }
         }        
+    }
+
+    IEnumerator GraceTime(float time)
+    {
+        c_rigi2d.velocity = new Vector2(c_rigi2d.velocity.x, 0f);
+        yield return new WaitForSeconds(time);
     }
     #endregion
     #region Wall Interactions
@@ -336,9 +354,10 @@ public class CelesteMovement : MonoBehaviour
             c_rigi2d.drag = 0f;
         } 
 
-        if(_onGround && !_dashing)
+        if(_onGround && !_dashing && !_jumping)
         {
             _dashCounter = 1f;
+            _jumpCounter = _jumpTimes;
         }
     }
     #endregion

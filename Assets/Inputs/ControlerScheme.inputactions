@@ -157,7 +157,7 @@
                 {
                     "name": "",
                     "id": "ab1ab082-c63c-4aec-a365-a1cc24446599",
-                    "path": "<Gamepad>/leftTrigger",
+                    "path": "<Gamepad>/leftShoulder",
                     "interactions": "Press",
                     "processors": "",
                     "groups": "Gamepad",
@@ -183,6 +183,17 @@
                     "interactions": "Press",
                     "processors": "",
                     "groups": "Gamepad",
+                    "action": "Torch",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "4c0b7066-0638-4d11-9a0d-c8fc7aa10f55",
+                    "path": "<Gamepad>/leftTrigger",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
                     "action": "Torch",
                     "isComposite": false,
                     "isPartOfComposite": false

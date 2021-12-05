@@ -104,7 +104,7 @@ public class InputHandler : MonoBehaviour
         {
             var mousePosition = _inputs.actions["aim"].ReadValue<Vector2>();
             _mouseWolrd = _mainCamera.ScreenToWorldPoint(mousePosition);
-            Vector2 dir = new Vector3(_mouseWolrd.x - transform.position.x , _mouseWolrd.y - transform.position.y).normalized;
+            //Vector2 dir = new Vector3(_mouseWolrd.x - transform.position.x , _mouseWolrd.y - transform.position.y).normalized;
             _aimHorizontal = _mouseWolrd.x;
             _aimVertical = _mouseWolrd.y;         
                     
