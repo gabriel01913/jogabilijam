@@ -12,6 +12,7 @@ public class torchTests : MonoBehaviour
     [SerializeField] float _rotateSpeed = 10f;
     [SerializeField] float _force = 30f;
     [SerializeField] LayerMask _layerMask;
+    [SerializeField] LayerMask _playerMask;
     public GameObject _player;
     CelesteMovement _celeste;
     [SerializeField] Vector2 _aimDir;
@@ -29,6 +30,7 @@ public class torchTests : MonoBehaviour
     InputHandler _Inputs;
     Rigidbody2D c_rigi2d;
     BoxCollider2D c_box;
+    ContactPoint2D[] contacts;
     // Start is called before the first frame update
     void Awake()
     {
@@ -92,6 +94,22 @@ public class torchTests : MonoBehaviour
         }
         _coroutine = StartCoroutine(Moving(_moveDir));
     }
+
+    void GetThrow()
+    {
+        if (_coroutine != null)
+        {
+            StopCoroutine(_coroutine);
+        }
+        c_rigi2d.velocity = Vector3.zero;
+        transform.rotation = Quaternion.Euler(Vector3.zero);
+        _hasThrow = false;
+        _returning = false;
+        _moving = false;
+        _stoped = false;
+        transform.parent = _player.transform;
+        transform.localPosition = _torchIniPosition;
+    }
     IEnumerator Moving(Vector2 dir)
     {
         _stoped = false;
@@ -102,7 +120,10 @@ public class torchTests : MonoBehaviour
     }
     private void Stop()
     {
-        StopCoroutine(_coroutine);
+        if(_coroutine != null)
+        {
+            StopCoroutine(_coroutine);
+        }        
         _moving = false;
         _returning = false;
         _stoped = true;
@@ -112,28 +133,20 @@ public class torchTests : MonoBehaviour
     void CheckCollision()
     {
         RaycastHit2D _hit = Physics2D.BoxCast(new Vector3(transform.position.x + _boxOffset.x, transform.position.y + _boxOffset.y, 0f),
+                            _boxSize, 0f, Vector2.left, 0f, _playerMask);
+        if(_hit.collider != null && (_stoped || _returning))
+        {
+            GetThrow();
+            return;
+        }
+        _hit = Physics2D.BoxCast(new Vector3(transform.position.x + _boxOffset.x, transform.position.y + _boxOffset.y, 0f),
                             _boxSize, 0f, Vector2.left, 0f, _layerMask);
         if (_hit.collider != null && !_stoped)
-        {            
-            Stop();
-        }
-    }
-    private void OnTriggerEnter2D(Collider2D collision)
-    {
-        if (collision.tag == "Player" && _returning || _stoped)
         {
-            if(_coroutine != null)
-            {
-                StopCoroutine(_coroutine);
-            }
-            c_rigi2d.velocity = Vector3.zero;
-            transform.rotation = Quaternion.Euler(Vector3.zero);
-            _hasThrow = false;
-            _returning = false;
-            _moving = false;
-            _stoped = false;
-            transform.parent = _player.transform;
-            transform.localPosition = _torchIniPosition;
+            Stop();
+            Vector3 newpos = new Vector3(transform.position.x - _hit.point.x, transform.position.y - _hit.point.y, 0f);
+            Debug.Log(newpos);
+            transform.position = new Vector3(transform.position.x + newpos.x, transform.position.y + newpos.y, 0f);
         }
     }
     #region QOL
