@@ -205,11 +205,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _runSpeed: 7
-  _jumpDuration: 15
+  _jumpDuration: 13
   _jumpMinSpeed: 10
   _jumpMaxSpeed: 13
   _jumpAcell: 0
-  _jumpTimer: 15
+  _graceTime: 0.1
+  _jumpTimes: 2
+  _jumpTimer: 14
   _dashSpeed: 5
   _dashDuration: 7
   _dashCounter: 1
@@ -262,7 +264,7 @@ MonoBehaviour:
   _wallRight: 0
   _velocity: {x: 0, y: 0}
   _direction: {x: 0, y: 0, z: 0}
-  _aimDirection: {x: -0.95616287, y: -0.2928355}
+  _aimDirection: {x: -8.888889, y: -5}
 --- !u!114 &4413402571991988278
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -507,7 +509,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2554348732362893833, guid: 34d93e01fc398b04391d19c821f7fb1b, type: 3}
       propertyPath: _force
-      value: 10
+      value: 13
       objectReference: {fileID: 0}
     - target: {fileID: 2554348732362893833, guid: 34d93e01fc398b04391d19c821f7fb1b, type: 3}
       propertyPath: _player
@@ -519,11 +521,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2554348732362893833, guid: 34d93e01fc398b04391d19c821f7fb1b, type: 3}
       propertyPath: _boxSize.x
-      value: 1.5
+      value: 0.96
       objectReference: {fileID: 0}
     - target: {fileID: 2554348732362893833, guid: 34d93e01fc398b04391d19c821f7fb1b, type: 3}
       propertyPath: _boxSize.y
-      value: 2.5
+      value: 1.62
+      objectReference: {fileID: 0}
+    - target: {fileID: 2554348732362893833, guid: 34d93e01fc398b04391d19c821f7fb1b, type: 3}
+      propertyPath: _boxOffset.y
+      value: -0.42
       objectReference: {fileID: 0}
     - target: {fileID: 2554348732362893833, guid: 34d93e01fc398b04391d19c821f7fb1b, type: 3}
       propertyPath: _rotateSpeed
@@ -539,11 +545,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2554348732362893835, guid: 34d93e01fc398b04391d19c821f7fb1b, type: 3}
       propertyPath: m_Size.x
-      value: 1.26
+      value: 0.70376205
       objectReference: {fileID: 0}
     - target: {fileID: 2554348732362893835, guid: 34d93e01fc398b04391d19c821f7fb1b, type: 3}
       propertyPath: m_Size.y
-      value: 2.1
+      value: 1.1766442
       objectReference: {fileID: 0}
     - target: {fileID: 2554348732362893835, guid: 34d93e01fc398b04391d19c821f7fb1b, type: 3}
       propertyPath: m_Offset.x
@@ -551,7 +557,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2554348732362893835, guid: 34d93e01fc398b04391d19c821f7fb1b, type: 3}
       propertyPath: m_Offset.y
-      value: 0
+      value: -0.46167785
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 34d93e01fc398b04391d19c821f7fb1b, type: 3}

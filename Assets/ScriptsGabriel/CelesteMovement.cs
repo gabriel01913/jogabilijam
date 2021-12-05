@@ -12,7 +12,6 @@ public class CelesteMovement : MonoBehaviour
     [SerializeField] private float _jumpMinSpeed = 10f;
     [SerializeField] private float _jumpMaxSpeed = 13f;
     [SerializeField] private float _jumpAcell = 0f;
-    [SerializeField] private float _graceTime = 0.1f;
     private float _jumpSpeed;
     public float _jumpTimes = 2f;
     float _jumpCounter;
@@ -21,6 +20,7 @@ public class CelesteMovement : MonoBehaviour
     [SerializeField] private float _dashSpeed = 5f;
     [SerializeField] float _dashDuration = 7f;
     [SerializeField] public float _dashCounter = 1f;
+    [SerializeField] public float _dashFrezeTime = 6f;
     private float _dashTimer;        
     [Header("Air Control")]
     [SerializeField] private float _fallMultiplier = 12f; //multiply by gravity
@@ -45,14 +45,7 @@ public class CelesteMovement : MonoBehaviour
     [SerializeField] private LayerMask _ccLayers;
     [SerializeField] private float _ccLenghtRayCast = 1.2f;
     [SerializeField] private Vector3 _ccEdegeRayCast = new Vector3(0.53f, 0f,0f);
-    [SerializeField] private Vector3 _ccInerRayCast = new Vector3(0.28f, 0f, 0f);    
-    [Header("Dash Correction Left")]
-    [SerializeField] private LayerMask _dsLayers;
-    [SerializeField] private float _dsLenghtRayCast = 1.09f;
-    [SerializeField] private float _dsDistanceRayCast = 0.5f;
-    [SerializeField] private Vector3 _dsEdegeRayCast = new Vector3(0f, -1.78f, 0f);
-    [SerializeField] private Vector3 _dsInerRayCast = new Vector3(0f, 1.49f, 0f);
-    [Header("Dash Correction Right")]
+    [SerializeField] private Vector3 _ccInerRayCast = new Vector3(0.28f, 0f, 0f);
     [Header("Coyte/Wall/Jump Timer")]
     [SerializeField] private float _coyoteTimer = .1f;// Or Hang Timer, in seconds
     private float _coyoteTimerCounter;
@@ -60,6 +53,7 @@ public class CelesteMovement : MonoBehaviour
     private float _jumpBufferCounter;
     [SerializeField] private float _wallJumpBufferTimer = .1f;// A little help to jump close to the wall, in seconds
     private float _wallJumpBufferCounter;
+    [SerializeField] private float _graceTime = 0.1f;
     [Header("Debug")]
     [Space]   
     [SerializeField] bool _canMove = true;
@@ -71,8 +65,6 @@ public class CelesteMovement : MonoBehaviour
     [SerializeField] bool _wallJumping;
     public bool _faceRight;
     [SerializeField] private bool _cornerCorrection;
-    [SerializeField] private bool _dashCorrection;
-    [SerializeField] private bool _dashRCorrection;
     float _horizontal;
     float _vertical;
     float _aimHorizontal;
@@ -300,12 +292,12 @@ public class CelesteMovement : MonoBehaviour
         _canMove = false;
         c_rigi2d.gravityScale = 0f;
         _dashTimer += 1;
-        if (_dashTimer < 6f)
+        if (_dashTimer < _dashFrezeTime)
         {
             c_rigi2d.velocity = Vector2.zero;
             yield return null;
         }
-        else if (_dashTimer < (_dashDuration + 6f))
+        else if (_dashTimer < (_dashDuration + _dashFrezeTime))
         {
             c_rigi2d.velocity += dir.normalized * _dashSpeed;
             yield return null;
@@ -418,21 +410,7 @@ public class CelesteMovement : MonoBehaviour
                         transform.position - _ccInerRayCast + Vector3.up * _ccLenghtRayCast + Vector3.left * _ccLenghtRayCast);
         Gizmos.DrawLine(transform.position + _ccInerRayCast + Vector3.up * _ccLenghtRayCast,
                         transform.position + _ccInerRayCast + Vector3.up * _ccLenghtRayCast + Vector3.right * _ccLenghtRayCast);
-
-        //dash correction
-        Gizmos.DrawLine(transform.position + _dsEdegeRayCast, transform.position + _dsEdegeRayCast + Vector3.left * _dsLenghtRayCast);
-        Gizmos.DrawLine(transform.position - _dsInerRayCast, transform.position - _dsInerRayCast + Vector3.left * _dsLenghtRayCast);
-
-        //corner distance check
-        Gizmos.DrawLine(transform.position + _dsEdegeRayCast + Vector3.left * _dsLenghtRayCast,
-                        transform.position + _dsEdegeRayCast + Vector3.left * _dsLenghtRayCast + Vector3.up * _dsDistanceRayCast);
-        //dash correction R
-        Gizmos.DrawLine(transform.position + _dsEdegeRayCast, transform.position + _dsEdegeRayCast + Vector3.right * _dsLenghtRayCast);
-        Gizmos.DrawLine(transform.position - _dsInerRayCast, transform.position - _dsInerRayCast + Vector3.right * _dsLenghtRayCast);
-
-        //corner distance check R
-        Gizmos.DrawLine(transform.position + _dsEdegeRayCast + Vector3.right * _dsLenghtRayCast,
-                        transform.position + _dsEdegeRayCast + Vector3.right * _dsLenghtRayCast + Vector3.up * _dsDistanceRayCast);
+        
     }
     #endregion
 }
