@@ -2,159 +2,184 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+
 public class torchTests : MonoBehaviour
 {
     [Header("Variables")]
     [SerializeField] Vector3 _torchIniPosition;
+    [SerializeField] Vector3 _boxSize;
+    [SerializeField] Vector3 _boxOffset;
     [SerializeField] float _rotateSpeed = 10f;
     [SerializeField] float _force = 30f;
-    [SerializeField] float _freezeReturning = 0.5f;
+    [SerializeField] float _distance = 1f;
+    [SerializeField] LayerMask _layerMask;
     public GameObject _player;
     CelesteMovement _celeste;
-    Vector3 _playerDir;
+    [SerializeField] Vector2 _aimDir;
+    [SerializeField] Vector2 _moveDir;
     Vector3 _torchPos;
     Vector3 _playerPos;
-    public LayerMask _layerMask;
     [Header("Debug")]
-    [SerializeField] bool _onMove;
+    [SerializeField] bool _canThrow;
+    [SerializeField] bool _hasThrow;
     [SerializeField] bool _moving;
     [SerializeField] bool _stoped;
     [SerializeField] bool _returning;
-    float _returningTime;
-   
-
+    Coroutine _coroutine;
     Vector2 _point;
-
     InputHandler _Inputs;
     Rigidbody2D c_rigi2d;
+    BoxCollider2D c_box;
     // Start is called before the first frame update
     void Awake()
     {
         _celeste = _player.GetComponent<CelesteMovement>();
         c_rigi2d = GetComponent<Rigidbody2D>();
         _Inputs = _player.GetComponent<InputHandler>();
+        c_box = GetComponent<BoxCollider2D>();
     }
     // Update is called once per frame
     void Update()
-    {        
-        _playerPos = _player.transform.position;
-        _playerDir = _celeste._aimDirection;
-        _torchPos = transform.position;        
-
+    {
         CheckPoint();
-        if (_Inputs.GetButtonDown("Torch") && !_onMove)
+        CheckCollision();
+        _playerPos = _player.transform.position;
+        _aimDir = _celeste._aimDirection.normalized;
+        _torchPos = transform.position;
+       
+        if (_Inputs.GetButtonDown("Torch") && !_hasThrow)
         {
-            TorchThrow(_playerDir);
-        }        
-    }
+            _hasThrow = true;            
+        }
 
-    private void FixedUpdate()
-    {
-        if (_stoped) StartCoroutine(Returning());
-        if(_moving || _returning)
+        if (_Inputs.GetButtonDown("Torch") && _hasThrow && _stoped)
         {
-            
-        }
-    }
-
-    #region TorchMovement
-    void TorchThrow(Vector2 dir)
-    {
-        _onMove = true;
-        _moving = true;
-        if (dir == Vector2.zero)
-        {
-            if (_celeste._faceRight)
-            {
-                dir = new Vector2(1f, 0f);
-            }
-            else
-            {
-                dir = new Vector2(-1f, 0f);
-            }
-        }
-        c_rigi2d.isKinematic = false;
-        c_rigi2d.gravityScale = 0;
-        c_rigi2d.drag = 0;
-        transform.parent = null;
-        if (_moving)
-        {
-            c_rigi2d.AddForce(dir * _force, ForceMode2D.Impulse);
-            transform.Rotate(0, 0, _rotateSpeed);
-        }
-    }
-
-    IEnumerator Returning()
-    {
-        yield return new WaitForSeconds(_freezeReturning);
-        transform.position = Vector3.Lerp(transform.position, _playerPos, _returningTime += Time.fixedDeltaTime);
-        if (!_returning)
-        {
-            yield break;
-        }
-    }
-    #endregion
-    #region CheckCollision
-    Vector3 CheckPoint()
-    {
-        Vector3 _newPosition = Vector3.zero;
-        RaycastHit2D _hit = Physics2D.Raycast(transform.position, _playerDir, Mathf.Infinity, _layerMask);
-        _point = _hit.point;
-        Debug.DrawRay(transform.position, _playerDir, Color.red);
-        return _newPosition;
-
-    }
-    #endregion
-    #region TriggerCollision
-    private void OnTriggerExit2D(Collider2D collision)
-    {
-        if (collision.CompareTag("Player"))
-        {
-            Debug.Log("Saiu PLayer");
-        }
-        if (collision.gameObject.layer == LayerMask.NameToLayer("Wall") || collision.gameObject.layer == LayerMask.NameToLayer("Ground"))
-        {
-            _stoped = false;
             _returning = true;
         }
     }
 
-    private void OnTriggerEnter2D(Collider2D collision)
+    private void FixedUpdate()
     {
-        StopAllCoroutines();
-        if (collision.tag == "Player" && _returning)
+        if (_hasThrow && !_stoped) TorchThrow(_aimDir);
+        if (_returning) ReturningThrow();
+    }
+
+    void TorchThrow(Vector3 dir)
+    {
+        if (!_moving)
         {
+            _moveDir = dir.normalized;
+        }
+        if(dir.x == 0)
+        {
+            if (_celeste._faceRight)
+            {
+                dir.x = 1f;
+            }
+            else
+            {
+                dir.x = -1f;
+            }
+        }
+        transform.parent = null;
+        _coroutine = StartCoroutine(Moving(_moveDir));
+    }
+    void ReturningThrow()
+    {
+        if (!_moving)
+        {
+            _moveDir = new Vector2(_playerPos.x - _torchPos.x, _playerPos.y - _torchPos.y).normalized;
+        }
+        if(transform.parent != null)
+        {
+            transform.parent = null;
+        }        
+        _coroutine = StartCoroutine(Moving(_moveDir));
+    }
+
+    IEnumerator Moving(Vector2 dir)
+    {
+        _stoped = false;
+        _moving = true;
+        c_rigi2d.velocity = dir * _force;
+        transform.Rotate(0,0,_rotateSpeed);
+        yield return null;
+    }
+    private void Stop()
+    {
+        StopCoroutine(_coroutine);
+        _moving = false;
+        _returning = false;
+        _stoped = true;
+        c_rigi2d.velocity = Vector3.zero;
+        transform.rotation = Quaternion.Euler(Vector3.zero);
+        c_box.isTrigger = true;
+    }
+
+
+
+    void CheckCollision()
+    {
+        RaycastHit2D _hit = Physics2D.BoxCast(new Vector3(transform.position.x + _boxOffset.x, transform.position.y + _boxOffset.y, 0f),
+                            _boxSize, 0f, Vector2.left, 0f, _layerMask);
+        if (_hit.collider != null)
+        {
+            c_box.isTrigger = false;
+            Stop();
+        }
+    }
+
+    private void OnTriggerStay2D(Collider2D collision)
+    {
+        if(collision.tag == "Player" && !_moving)
+        {            
+            if(_coroutine != null)
+            {
+                StopCoroutine(_coroutine);
+            }
+            transform.rotation = Quaternion.Euler(Vector3.zero);
+            c_rigi2d.velocity = Vector3.zero;
+            _hasThrow = false;
             _returning = false;
             _moving = false;
             _stoped = false;
-            c_rigi2d.isKinematic = true;
             transform.parent = _player.transform;
-            _onMove = false;
-
-        }
-
-        if (_moving && collision.gameObject.layer == LayerMask.NameToLayer("Wall") || collision.gameObject.layer == LayerMask.NameToLayer("Ground"))
-        {
-            transform.rotation = Quaternion.Euler(Vector3.zero);
-            _moving = false;
-            c_rigi2d.velocity = Vector2.zero;
-            _stoped = true;
-            _returningTime = 0f;
-        }
-        if(collision.tag == "Player" && !_onMove)
-        {
-            StopAllCoroutines();
-            transform.rotation = Quaternion.Euler(Vector3.zero);
             transform.localPosition = _torchIniPosition;
-        }        
+        }
     }
-    #endregion
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.tag == "Player" && _returning)
+        {
+            if(_coroutine != null)
+            {
+                StopCoroutine(_coroutine);
+            }
+            c_rigi2d.velocity = Vector3.zero;
+            transform.rotation = Quaternion.Euler(Vector3.zero);
+            _hasThrow = false;
+            _returning = false;
+            _moving = false;
+            _stoped = false;
+            transform.parent = _player.transform;
+            transform.localPosition = _torchIniPosition;
+        }
+    }
     #region QOL
+    Vector3 CheckPoint()
+    {
+        Vector3 _newPosition = Vector3.zero;
+        RaycastHit2D _hit = Physics2D.Raycast(transform.position, _aimDir, Mathf.Infinity, _layerMask);
+        _point = _hit.point;
+        Debug.DrawRay(transform.position, _aimDir, Color.red);
+        return _newPosition;
+    }
     private void OnDrawGizmos()
     {
-        Vector3 pos = _playerDir * 10 + transform.position;
+        Vector3 pos = new Vector3(_aimDir.x * 10 + transform.position.x, _aimDir.y * 10 + transform.position.y, 0f);
         Gizmos.DrawLine(transform.position, pos);
         Gizmos.DrawWireSphere(_point, 1);
+        Gizmos.DrawWireCube(new Vector3(transform.position.x + _boxOffset.x, transform.position.y + _boxOffset.y, 0f), _boxSize);
     }
     #endregion
 }
