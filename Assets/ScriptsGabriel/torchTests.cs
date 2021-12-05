@@ -11,7 +11,6 @@ public class torchTests : MonoBehaviour
     [SerializeField] Vector3 _boxOffset;
     [SerializeField] float _rotateSpeed = 10f;
     [SerializeField] float _force = 30f;
-    [SerializeField] float _distance = 1f;
     [SerializeField] LayerMask _layerMask;
     public GameObject _player;
     CelesteMovement _celeste;
@@ -41,12 +40,11 @@ public class torchTests : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        CheckPoint();
         CheckCollision();
+        CheckPoint();        
         _playerPos = _player.transform.position;
         _aimDir = _celeste._aimDirection.normalized;
-        _torchPos = transform.position;
-       
+        _torchPos = transform.position;       
         if (_Inputs.GetButtonDown("Torch") && !_hasThrow)
         {
             _hasThrow = true;            
@@ -57,28 +55,26 @@ public class torchTests : MonoBehaviour
             _returning = true;
         }
     }
-
     private void FixedUpdate()
     {
         if (_hasThrow && !_stoped) TorchThrow(_aimDir);
         if (_returning) ReturningThrow();
     }
-
     void TorchThrow(Vector3 dir)
     {
         if (!_moving)
         {
             _moveDir = dir.normalized;
         }
-        if(dir.x == 0)
+        if(_moveDir == Vector2.zero)
         {
             if (_celeste._faceRight)
             {
-                dir.x = 1f;
+                _moveDir.x = 1f;
             }
             else
             {
-                dir.x = -1f;
+                _moveDir.x = -1f;
             }
         }
         transform.parent = null;
@@ -93,10 +89,9 @@ public class torchTests : MonoBehaviour
         if(transform.parent != null)
         {
             transform.parent = null;
-        }        
+        }
         _coroutine = StartCoroutine(Moving(_moveDir));
     }
-
     IEnumerator Moving(Vector2 dir)
     {
         _stoped = false;
@@ -113,43 +108,19 @@ public class torchTests : MonoBehaviour
         _stoped = true;
         c_rigi2d.velocity = Vector3.zero;
         transform.rotation = Quaternion.Euler(Vector3.zero);
-        c_box.isTrigger = true;
     }
-
-
-
     void CheckCollision()
     {
         RaycastHit2D _hit = Physics2D.BoxCast(new Vector3(transform.position.x + _boxOffset.x, transform.position.y + _boxOffset.y, 0f),
                             _boxSize, 0f, Vector2.left, 0f, _layerMask);
-        if (_hit.collider != null)
-        {
-            c_box.isTrigger = false;
-            Stop();
-        }
-    }
-
-    private void OnTriggerStay2D(Collider2D collision)
-    {
-        if(collision.tag == "Player" && !_moving)
+        if (_hit.collider != null && !_stoped)
         {            
-            if(_coroutine != null)
-            {
-                StopCoroutine(_coroutine);
-            }
-            transform.rotation = Quaternion.Euler(Vector3.zero);
-            c_rigi2d.velocity = Vector3.zero;
-            _hasThrow = false;
-            _returning = false;
-            _moving = false;
-            _stoped = false;
-            transform.parent = _player.transform;
-            transform.localPosition = _torchIniPosition;
+            Stop();
         }
     }
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.tag == "Player" && _returning)
+        if (collision.tag == "Player" && _returning || _stoped)
         {
             if(_coroutine != null)
             {
