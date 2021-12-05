@@ -30,20 +30,20 @@ public class TorchBehavior : MonoBehaviour
     }
   }
 
-  public void Refill(int amountInPercentage)
+  public static void SetIntensity(int amountInPercentage)
   {
-    timeLeft = Mathf.Clamp(timeLeft + maxDuration * (amountInPercentage / 100f), 0, maxDuration);
+    TorchBehavior torch = FindObjectOfType<TorchBehavior>();
+    if (torch == null)
+    {
+      Debug.LogError("TorchBehavior.Refill: TorchBehavior not found");
+      return;
+    }
+    torch.timeLeft = Mathf.Clamp(torch.timeLeft + torch.maxDuration * (amountInPercentage / 100f), 0, torch.maxDuration);
   }
-
-  public void Decrease(int amountInPercentage)
-  {
-    timeLeft = Mathf.Clamp(timeLeft - maxDuration * (amountInPercentage / 100f), 0, maxDuration);
-  }
-
 
   private void OnValidate()
   {
-    Refill(100);
+    this.timeLeft = maxDuration;
   }
 
 }
