@@ -8,9 +8,9 @@ public class CelesteMovement : MonoBehaviour
     [Header("Run / Jump")]
     [Header("Constants")]
     [SerializeField] private float _runSpeed = 7f;
-    [SerializeField] private float _jumpDuration = 13f;
-    [SerializeField] private float _jumpMinSpeed = 10f;
-    [SerializeField] private float _jumpMaxSpeed = 13f;
+    [SerializeField] private float _jumpDuration = 8f;
+    [SerializeField] private float _jumpMinSpeed = 15f;
+    [SerializeField] private float _jumpMaxSpeed = 18f;
     [SerializeField] private float _jumpAcell = 0f;
     private float _jumpSpeed;
     public float _jumpTimes = 2f;
@@ -90,13 +90,11 @@ public class CelesteMovement : MonoBehaviour
         _Inputs = GetComponent<InputHandler>();
         _faceRight = true;
     }
-
     private void Update()
     {
         _Inputs.ButtonsStart();
         CheckInputs();        
     }
-
     private void FixedUpdate()
     {        
         CheckColission();
@@ -110,15 +108,12 @@ public class CelesteMovement : MonoBehaviour
         if (_wallSlide) WallSlide();
         
     }
-
     private void LateUpdate()
     {
         _Inputs.ButtonsCleanUp();
     }
-
     void CheckInputs()
     {
-        Debug.Log(_jumpCounter);
         //get velocity in the start of frame
         _velocity = c_rigi2d.velocity;
 

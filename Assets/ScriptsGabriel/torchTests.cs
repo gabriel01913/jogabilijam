@@ -8,8 +8,8 @@ public class torchTests : MonoBehaviour
 {
     [Header("Variables")]
     [SerializeField] Vector3 _torchIniPosition;
-    [SerializeField] Vector3 _boxSize;
-    [SerializeField] Vector3 _boxOffset;
+    [SerializeField] Vector3 _boxSize = new Vector3(0.96f, 0.81f , 0f);
+    [SerializeField] Vector3 _boxOffset = new Vector3(0f, 0.05f, 0f);
     [SerializeField] float _rotateSpeed = 10f;
     [SerializeField] float _force = 30f;
     [SerializeField] LayerMask _layerMask;
@@ -122,6 +122,19 @@ public class torchTests : MonoBehaviour
             _celeste._dashCounter = 1f;
         }
     }
+    public void Restart()
+    {
+        _aimDir = Vector2.zero;
+        _moveDir = Vector2.zero;
+        c_rigi2d.velocity = Vector3.zero;
+        transform.rotation = Quaternion.Euler(Vector3.zero);
+        _hasThrow = false;
+        _returning = false;
+        _moving = false;
+        _stoped = false;
+        transform.parent = _player.transform;
+        transform.localPosition = _torchIniPosition;
+    }       
     IEnumerator Moving(Vector2 dir)
     {
         _stoped = false;
@@ -147,18 +160,32 @@ public class torchTests : MonoBehaviour
         RaycastHit2D _hit = Physics2D.BoxCast(new Vector3(transform.position.x + _boxOffset.x, transform.position.y + _boxOffset.y, 0f),
                             _boxSize, 0f, Vector2.left, 0f, _playerMask);
         if(_hit.collider != null && (_stoped || _returning))
-        {
+        {            
             GetThrow();
             return;
         }
         _hit = Physics2D.BoxCast(new Vector3(transform.position.x + _boxOffset.x, transform.position.y + _boxOffset.y, 0f),
                             _boxSize, 0f, Vector2.left, 0f, _layerMask);
         if (_hit.collider != null && !_stoped && _hasThrow)
-        {
+        {            
             Stop();
-            Vector3 newpos = new Vector3(transform.position.x - _hit.point.x, transform.position.y - _hit.point.y, 0f);
-            Debug.Log(newpos);
-            transform.position = new Vector3(transform.position.x + newpos.x, transform.position.y + newpos.y, 0f);
+            Debug.Log(_hit.normal);
+            Debug.Log(_hit.point);            
+            Debug.Log(transform.position);
+            if(_hit.normal.x > 0 || _hit.normal.y > 0)
+            {
+                Vector3 newpos = new Vector3(transform.position.x - _hit.point.x, transform.position.y - _hit.point.y, 0f);
+                Debug.Log(newpos);
+                transform.position = new Vector3((transform.position.x + newpos.x), (transform.position.y + newpos.y), 0f);
+            }
+            else
+            {
+                Vector3 newpos = new Vector3(_hit.point.x - transform.position.x, _hit.point.y - transform.position.y, 0f);
+                Debug.Log(newpos);
+                transform.position = new Vector3((transform.position.x - newpos.x), (transform.position.y - newpos.y), 0f);
+            }
+            
+            
         }
     }
     #region QOL

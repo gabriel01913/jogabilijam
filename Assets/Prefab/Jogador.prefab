@@ -209,24 +209,24 @@ MonoBehaviour:
   _jumpMinSpeed: 10
   _jumpMaxSpeed: 13
   _jumpAcell: 0
-  _graceTime: 0.1
   _jumpTimes: 2
   _jumpTimer: 14
   _dashSpeed: 5
   _dashDuration: 7
   _dashCounter: 1
+  _dashFrezeTime: 6
   _fallMultiplier: 12
   _airDecel: 5
   _groundLayer:
     serializedVersion: 2
-    m_Bits: 128
+    m_Bits: 1024
   _groundOffset: {x: 0, y: -1.83}
   _groundSize: {x: 1, y: 0.3}
   _groundDistance: 0
   _wallSlideVelocity: 4
   _wallLayer:
     serializedVersion: 2
-    m_Bits: 256
+    m_Bits: 1024
   _wallLefOffset: {x: -0.64, y: -0.35}
   _wallLeftSize: {x: 0.2, y: 1.96}
   _wallLeftDistance: 0
@@ -235,20 +235,14 @@ MonoBehaviour:
   _wallRightDistance: 0
   _ccLayers:
     serializedVersion: 2
-    m_Bits: 384
+    m_Bits: 1024
   _ccLenghtRayCast: 1.2
   _ccEdegeRayCast: {x: 0.53, y: 0, z: 0}
   _ccInerRayCast: {x: 0.28, y: 0, z: 0}
-  _dsLayers:
-    serializedVersion: 2
-    m_Bits: 128
-  _dsLenghtRayCast: 1.09
-  _dsDistanceRayCast: 0.5
-  _dsEdegeRayCast: {x: 0, y: -1.78, z: 0}
-  _dsInerRayCast: {x: 0, y: 1.49, z: 0}
   _coyoteTimer: 0.1
   _jumpBufferTimer: 0.1
   _wallJumpBufferTimer: 0.1
+  _graceTime: 0.1
   _canMove: 1
   _canJump: 1
   _onGround: 1
@@ -258,8 +252,6 @@ MonoBehaviour:
   _wallJumping: 0
   _faceRight: 1
   _cornerCorrection: 0
-  _dashCorrection: 0
-  _dashRCorrection: 0
   _wallLeft: 0
   _wallRight: 0
   _velocity: {x: 0, y: 0}
@@ -534,6 +526,10 @@ PrefabInstance:
     - target: {fileID: 2554348732362893833, guid: 34d93e01fc398b04391d19c821f7fb1b, type: 3}
       propertyPath: _rotateSpeed
       value: 20
+      objectReference: {fileID: 0}
+    - target: {fileID: 2554348732362893833, guid: 34d93e01fc398b04391d19c821f7fb1b, type: 3}
+      propertyPath: _layerMask.m_Bits
+      value: 1024
       objectReference: {fileID: 0}
     - target: {fileID: 2554348732362893833, guid: 34d93e01fc398b04391d19c821f7fb1b, type: 3}
       propertyPath: _playerMask.m_Bits
