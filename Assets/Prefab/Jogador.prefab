@@ -1,5 +1,35 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!1 &469391942
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 469391943}
+  m_Layer: 9
+  m_Name: TorchAnchor
+  m_TagString: Untagged
+  m_Icon: {fileID: -5397416234189338067, guid: 0000000000000000d000000000000000, type: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &469391943
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 469391942}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 4413402571991988276}
+  m_RootOrder: 2
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1249366735
 GameObject:
   m_ObjectHideFlags: 0
@@ -25,7 +55,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1249366735}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0.62, y: -0.65, z: 0}
+  m_LocalPosition: {x: 0.62, y: 0.65, z: 0}
   m_LocalScale: {x: 0.64729655, y: 0.6041763, z: 0.6151255}
   m_Children: []
   m_Father: {fileID: 4413402571991988276}
@@ -117,6 +147,7 @@ Transform:
   m_Children:
   - {fileID: 4413402572201323266}
   - {fileID: 1249366736}
+  - {fileID: 469391943}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -160,17 +191,17 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: -7870276711496609559, guid: f03ea106c5865514891422ebb43059c1, type: 3}
+  m_Sprite: {fileID: 978942612559604503, guid: 22bf1707062ee2a4587f13997a86fe92, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
-  m_Size: {x: 2.24, y: 3.36}
+  m_Size: {x: 2.24, y: 3.73}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
-  m_SpriteSortPoint: 0
+  m_SpriteSortPoint: 1
 --- !u!50 &4413402571991988232
 Rigidbody2D:
   serializedVersion: 4
@@ -204,25 +235,25 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a944068168bbf2d418e37b475ecac5de, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _runSpeed: 7
+  _runSpeed: 10
   _jumpDuration: 13
   _jumpMinSpeed: 10
   _jumpMaxSpeed: 13
   _jumpAcell: 0
-  _jumpTimes: 2
+  _jumpTimes: 1
   _jumpTimer: 14
   _dashSpeed: 5
   _dashDuration: 7
   _dashCounter: 1
   _dashFrezeTime: 6
-  _fallMultiplier: 12
+  _fallMultiplier: 16
   _airDecel: 5
   _groundLayer:
     serializedVersion: 2
     m_Bits: 1024
-  _groundOffset: {x: 0, y: -1.83}
+  _groundOffset: {x: 0, y: 0}
   _groundSize: {x: 1, y: 0.3}
-  _groundDistance: 0
+  _groundDistance: 0.09
   _wallSlideVelocity: 4
   _wallLayer:
     serializedVersion: 2
@@ -379,6 +410,34 @@ MonoBehaviour:
         m_CallState: 2
     m_ActionId: 19a1649a-21e4-4fff-9ad6-2554c3e9cc5a
     m_ActionName: Gameplay/Aim[/Mouse/position]
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 0}
+        m_TargetAssemblyTypeName: DialogController, Assembly-CSharp
+        m_MethodName: NextDialog
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 1249366737}
+        m_TargetAssemblyTypeName: PlayerInteractBehavior, Assembly-CSharp
+        m_MethodName: TryInteract
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_ActionId: 0c2a7313-c08d-48ee-8dad-3c5a49032d89
+    m_ActionName: Gameplay/Interact[/Keyboard/e,/XInputControllerWindows/buttonEast]
   m_NeverAutoSwitchControlSchemes: 0
   m_DefaultControlScheme: Keyboard
   m_DefaultActionMap: Gameplay
@@ -397,18 +456,18 @@ BoxCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: -0.001947403, y: -0.50088906}
+  m_Offset: {x: 0, y: 1.32}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
-    pivot: {x: 0.5, y: 0.5}
+    pivot: {x: 0.5, y: 0}
     oldSize: {x: 2.24, y: 3.73}
-    newSize: {x: 2.24, y: 3.36}
+    newSize: {x: 2.24, y: 3.73}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 1.1281729, y: 2.5584822}
+  m_Size: {x: 1.2, y: 2.5}
   m_EdgeRadius: 0
 --- !u!95 &4413402571991988279
 Animator:
@@ -441,9 +500,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 61525c8c2b740134eb60365cbab7bb1c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  jump1: {fileID: 444702640956841479, guid: c3215652c2cc5c2479b14f193c2c9972, type: 3}
-  jump2: {fileID: -7941400250425145444, guid: c3215652c2cc5c2479b14f193c2c9972, type: 3}
-  jump3: {fileID: 496497603323687001, guid: c3215652c2cc5c2479b14f193c2c9972, type: 3}
 --- !u!1001 &2183490329933463813
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -461,11 +517,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2554348732362893831, guid: 34d93e01fc398b04391d19c821f7fb1b, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 0.81
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2554348732362893831, guid: 34d93e01fc398b04391d19c821f7fb1b, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 1.04
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2554348732362893831, guid: 34d93e01fc398b04391d19c821f7fb1b, type: 3}
       propertyPath: m_LocalPosition.z
@@ -499,6 +555,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 2554348732362893832, guid: 34d93e01fc398b04391d19c821f7fb1b, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 2554348732362893833, guid: 34d93e01fc398b04391d19c821f7fb1b, type: 3}
       propertyPath: _force
       value: 13
@@ -519,6 +579,10 @@ PrefabInstance:
       propertyPath: _boxSize.y
       value: 1.62
       objectReference: {fileID: 0}
+    - target: {fileID: 2554348732362893833, guid: 34d93e01fc398b04391d19c821f7fb1b, type: 3}
+      propertyPath: torchPivot
+      value: 
+      objectReference: {fileID: 469391943}
     - target: {fileID: 2554348732362893833, guid: 34d93e01fc398b04391d19c821f7fb1b, type: 3}
       propertyPath: _boxOffset.y
       value: -0.42
