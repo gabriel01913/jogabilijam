@@ -555,114 +555,18 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 2554348732362893832, guid: 34d93e01fc398b04391d19c821f7fb1b, type: 3}
-      propertyPath: m_Enabled
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 2554348732362893833, guid: 34d93e01fc398b04391d19c821f7fb1b, type: 3}
-      propertyPath: _force
-      value: 13
-      objectReference: {fileID: 0}
     - target: {fileID: 2554348732362893833, guid: 34d93e01fc398b04391d19c821f7fb1b, type: 3}
       propertyPath: _player
       value: 
       objectReference: {fileID: 4413402571991988239}
     - target: {fileID: 2554348732362893833, guid: 34d93e01fc398b04391d19c821f7fb1b, type: 3}
-      propertyPath: _distance
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 2554348732362893833, guid: 34d93e01fc398b04391d19c821f7fb1b, type: 3}
-      propertyPath: _boxSize.x
-      value: 0.96
-      objectReference: {fileID: 0}
-    - target: {fileID: 2554348732362893833, guid: 34d93e01fc398b04391d19c821f7fb1b, type: 3}
-      propertyPath: _boxSize.y
-      value: 1.62
-      objectReference: {fileID: 0}
-    - target: {fileID: 2554348732362893833, guid: 34d93e01fc398b04391d19c821f7fb1b, type: 3}
       propertyPath: torchPivot
       value: 
       objectReference: {fileID: 469391943}
-    - target: {fileID: 2554348732362893833, guid: 34d93e01fc398b04391d19c821f7fb1b, type: 3}
-      propertyPath: _boxOffset.y
-      value: -0.42
-      objectReference: {fileID: 0}
-    - target: {fileID: 2554348732362893833, guid: 34d93e01fc398b04391d19c821f7fb1b, type: 3}
-      propertyPath: _rotateSpeed
-      value: 20
-      objectReference: {fileID: 0}
-    - target: {fileID: 2554348732362893833, guid: 34d93e01fc398b04391d19c821f7fb1b, type: 3}
-      propertyPath: _layerMask.m_Bits
-      value: 1024
-      objectReference: {fileID: 0}
-    - target: {fileID: 2554348732362893833, guid: 34d93e01fc398b04391d19c821f7fb1b, type: 3}
-      propertyPath: _playerMask.m_Bits
-      value: 512
-      objectReference: {fileID: 0}
-    - target: {fileID: 2554348732362893834, guid: 34d93e01fc398b04391d19c821f7fb1b, type: 3}
-      propertyPath: m_CollisionDetection
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 2554348732362893835, guid: 34d93e01fc398b04391d19c821f7fb1b, type: 3}
-      propertyPath: m_Size.x
-      value: 0.70376205
-      objectReference: {fileID: 0}
-    - target: {fileID: 2554348732362893835, guid: 34d93e01fc398b04391d19c821f7fb1b, type: 3}
-      propertyPath: m_Size.y
-      value: 1.1766442
-      objectReference: {fileID: 0}
-    - target: {fileID: 2554348732362893835, guid: 34d93e01fc398b04391d19c821f7fb1b, type: 3}
-      propertyPath: m_Offset.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 2554348732362893835, guid: 34d93e01fc398b04391d19c821f7fb1b, type: 3}
-      propertyPath: m_Offset.y
-      value: -0.46167785
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 34d93e01fc398b04391d19c821f7fb1b, type: 3}
---- !u!1 &4413402572201323265 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 2554348732362893828, guid: 34d93e01fc398b04391d19c821f7fb1b, type: 3}
-  m_PrefabInstance: {fileID: 2183490329933463813}
-  m_PrefabAsset: {fileID: 0}
 --- !u!4 &4413402572201323266 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 2554348732362893831, guid: 34d93e01fc398b04391d19c821f7fb1b, type: 3}
   m_PrefabInstance: {fileID: 2183490329933463813}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &1284867155
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4413402572201323265}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1964ffd0aa0f63d4f9d660cf00402f49, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  maxDuration: 60
-  timeLeft: 60
-  OnExtinguish:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 11400000, guid: 4c6b4ccadca7b014b89197e069700e33, type: 2}
-        m_TargetAssemblyTypeName: GameEvent, Assembly-CSharp
-        m_MethodName: Raise
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-  OnRefill:
-    m_PersistentCalls:
-      m_Calls: []
-  OnDamage:
-    m_PersistentCalls:
-      m_Calls: []

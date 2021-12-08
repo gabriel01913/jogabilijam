@@ -33,7 +33,7 @@ public class TorchThrowBehavior : MonoBehaviour
   PlayerInput _playerInput;
   InputHandler _Inputs;
   Rigidbody2D c_rigi2d;
-  SpriteRenderer _spriteRenderer;
+  Animator animator;
   // Start is called before the first frame update
   void Awake()
   {
@@ -41,7 +41,7 @@ public class TorchThrowBehavior : MonoBehaviour
     c_rigi2d = GetComponent<Rigidbody2D>();
     _Inputs = _player.GetComponent<InputHandler>();
     _playerInput = _player.GetComponent<PlayerInput>();
-    _spriteRenderer = GetComponent<SpriteRenderer>();
+    animator = GetComponent<Animator>();
   }
   // Update is called once per frame
   void Update()
@@ -93,7 +93,7 @@ public class TorchThrowBehavior : MonoBehaviour
       }
     }
     transform.parent = null;
-    _spriteRenderer.enabled = true;
+    animator.SetBool("show", true);
     _coroutine = StartCoroutine(Moving(_moveDir));
   }
   void ReturningThrow()
@@ -122,7 +122,8 @@ public class TorchThrowBehavior : MonoBehaviour
     _stoped = false;
     transform.parent = _player.transform;
     transform.localPosition = torchPivot.localPosition;
-    _spriteRenderer.enabled = false;
+    animator.SetBool("show", false);
+
     if (!_celeste._onGround)
     {
       _celeste._dashCounter = 1f;

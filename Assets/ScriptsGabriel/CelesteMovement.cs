@@ -388,25 +388,25 @@ public class CelesteMovement : MonoBehaviour
     }
   }
 
-  // void OnDrawGizmos()
-  // {
-  //     Gizmos.color = Color.red;
-  //     Gizmos.DrawWireCube((Vector2)transform.position + _groundOffset, _groundSize);
-  //     Gizmos.DrawWireCube((Vector2)transform.position + _wallLefOffset, _wallLeftSize);
-  //     Gizmos.DrawWireCube((Vector2)transform.position + _wallRightOffset, _wallRightSize);
+  void OnDrawGizmos()
+  {
+    Gizmos.color = Color.red;
+    Gizmos.DrawWireCube((Vector2)transform.position + _groundOffset, _groundSize);
+    Gizmos.DrawWireCube((Vector2)transform.position + _wallLefOffset, _wallLeftSize);
+    Gizmos.DrawWireCube((Vector2)transform.position + _wallRightOffset, _wallRightSize);
 
-  //     //corner check
-  //     Gizmos.DrawLine(transform.position + _ccEdegeRayCast, transform.position + _ccEdegeRayCast + Vector3.up * _ccLenghtRayCast);
-  //     Gizmos.DrawLine(transform.position - _ccEdegeRayCast, transform.position - _ccEdegeRayCast + Vector3.up * _ccLenghtRayCast);
-  //     Gizmos.DrawLine(transform.position + _ccInerRayCast, transform.position + _ccInerRayCast + Vector3.up * _ccLenghtRayCast);
-  //     Gizmos.DrawLine(transform.position - _ccInerRayCast, transform.position - _ccInerRayCast + Vector3.up * _ccLenghtRayCast);
+    //corner check
+    Gizmos.DrawLine(transform.position + _ccEdegeRayCast, transform.position + _ccEdegeRayCast + Vector3.up * _ccLenghtRayCast);
+    Gizmos.DrawLine(transform.position - _ccEdegeRayCast, transform.position - _ccEdegeRayCast + Vector3.up * _ccLenghtRayCast);
+    Gizmos.DrawLine(transform.position + _ccInerRayCast, transform.position + _ccInerRayCast + Vector3.up * _ccLenghtRayCast);
+    Gizmos.DrawLine(transform.position - _ccInerRayCast, transform.position - _ccInerRayCast + Vector3.up * _ccLenghtRayCast);
 
-  //     //corner distance check
-  //     Gizmos.DrawLine(transform.position - _ccInerRayCast + Vector3.up * _ccLenghtRayCast,
-  //                     transform.position - _ccInerRayCast + Vector3.up * _ccLenghtRayCast + Vector3.left * _ccLenghtRayCast);
-  //     Gizmos.DrawLine(transform.position + _ccInerRayCast + Vector3.up * _ccLenghtRayCast,
-  //                     transform.position + _ccInerRayCast + Vector3.up * _ccLenghtRayCast + Vector3.right * _ccLenghtRayCast);
+    //corner distance check
+    Gizmos.DrawLine(transform.position - _ccInerRayCast + Vector3.up * _ccLenghtRayCast,
+                    transform.position - _ccInerRayCast + Vector3.up * _ccLenghtRayCast + Vector3.left * _ccLenghtRayCast);
+    Gizmos.DrawLine(transform.position + _ccInerRayCast + Vector3.up * _ccLenghtRayCast,
+                    transform.position + _ccInerRayCast + Vector3.up * _ccLenghtRayCast + Vector3.right * _ccLenghtRayCast);
 
-  // }
+  }
   #endregion
 }

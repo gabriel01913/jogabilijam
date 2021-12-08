@@ -1,34 +1,34 @@
 fileFormatVersion: 2
-guid: 87ce95b61a443e24a8a6ad5173ac9131
+guid: 54989a310733d1343a50f9c43f3da6b9
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: -7761846214032167949
-    second: Sprite_Sheet_-_Tocha_hud_0
+      213: -7886095280468031780
+    second: Shrine_0
   - first:
-      213: -2640874920194485222
-    second: Sprite_Sheet_-_Tocha_hud_1
+      213: 6821660296988494772
+    second: Shrine_1
   - first:
-      213: -6884000815775924659
-    second: Sprite_Sheet_-_Tocha_hud_2
+      213: 8704601297031013854
+    second: Shrine_2
   - first:
-      213: -300293137940279812
-    second: Sprite_Sheet_-_Tocha_hud_3
+      213: 1217653395437160970
+    second: Shrine_3
   - first:
-      213: -6500544784215006697
-    second: Sprite_Sheet_-_Tocha_hud_4
+      213: 4594872569824585896
+    second: Shrine_4
   - first:
-      213: -2042913369494908356
-    second: Sprite_Sheet_-_Tocha_hud_5
+      213: -6890968599996275985
+    second: Shrine_5
   - first:
-      213: -807099616363601056
-    second: Sprite_Sheet_-_Tocha_hud_6
+      213: -4555750826375597627
+    second: Shrine_6
   - first:
-      213: -4135793092878661961
-    second: Sprite_Sheet_-_Tocha_hud_7
+      213: 6715121523222610061
+    second: Shrine_7
   - first:
-      213: -7633766638203463642
-    second: Sprite_Sheet_-_Tocha_hud_8
+      213: 6235783391474826485
+    second: Shrine_8
   externalObjects: {}
   serializedVersion: 11
   mipmaps:
@@ -95,7 +95,7 @@ TextureImporter:
     maxTextureSize: 2048
     resizeAlgorithm: 0
     textureFormat: -1
-    textureCompression: 1
+    textureCompression: 0
     compressionQuality: 50
     crunchedCompression: 0
     allowsAlphaSplitting: 0
@@ -107,7 +107,7 @@ TextureImporter:
     maxTextureSize: 2048
     resizeAlgorithm: 0
     textureFormat: -1
-    textureCompression: 1
+    textureCompression: 0
     compressionQuality: 50
     crunchedCompression: 0
     allowsAlphaSplitting: 0
@@ -119,7 +119,7 @@ TextureImporter:
     maxTextureSize: 2048
     resizeAlgorithm: 0
     textureFormat: -1
-    textureCompression: 1
+    textureCompression: 0
     compressionQuality: 50
     crunchedCompression: 0
     allowsAlphaSplitting: 0
@@ -131,7 +131,7 @@ TextureImporter:
     maxTextureSize: 2048
     resizeAlgorithm: 0
     textureFormat: -1
-    textureCompression: 1
+    textureCompression: 0
     compressionQuality: 50
     crunchedCompression: 0
     allowsAlphaSplitting: 0
@@ -142,190 +142,190 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: Sprite_Sheet_-_Tocha_hud_0
+      name: Shrine_0
       rect:
         serializedVersion: 2
-        x: 1
+        x: 0
         y: 0
-        width: 132
-        height: 231
-      alignment: 9
-      pivot: {x: 0.49501812, y: 0.38043508}
+        width: 519
+        height: 716
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 3fbe66b0ef1684490800000000000000
-      internalID: -7761846214032167949
+      spriteID: cd681deef16fe8290800000000000000
+      internalID: -7886095280468031780
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Sprite_Sheet_-_Tocha_hud_1
+      name: Shrine_1
       rect:
         serializedVersion: 2
-        x: 132
-        y: 105
-        width: 132
-        height: 126
-      alignment: 9
-      pivot: {x: 0.6558172, y: 0.08546593}
+        x: 519
+        y: 0
+        width: 519
+        height: 716
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: a14d195804ab95bd0800000000000000
-      internalID: -2640874920194485222
+      spriteID: 4bb826cb5e76bae50800000000000000
+      internalID: 6821660296988494772
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Sprite_Sheet_-_Tocha_hud_2
+      name: Shrine_2
       rect:
         serializedVersion: 2
-        x: 264
-        y: 105
-        width: 132
-        height: 126
-      alignment: 9
-      pivot: {x: 0.6285756, y: 0.095793284}
+        x: 1038
+        y: 0
+        width: 519
+        height: 716
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: d4e3d262bbd1770a0800000000000000
-      internalID: -6884000815775924659
+      spriteID: ed520fcb2c4fcc870800000000000000
+      internalID: 8704601297031013854
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Sprite_Sheet_-_Tocha_hud_3
+      name: Shrine_3
       rect:
         serializedVersion: 2
-        x: 396
-        y: 106
-        width: 132
-        height: 125
-      alignment: 9
-      pivot: {x: 0.61956465, y: 0.10017481}
+        x: 1557
+        y: 0
+        width: 519
+        height: 716
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: cfd05986bf425dbf0800000000000000
-      internalID: -300293137940279812
+      spriteID: a0a849ecf49f5e010800000000000000
+      internalID: 1217653395437160970
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Sprite_Sheet_-_Tocha_hud_4
+      name: Shrine_4
       rect:
         serializedVersion: 2
-        x: 528
-        y: 106
-        width: 132
-        height: 125
-      alignment: 9
-      pivot: {x: 0.60960066, y: 0.115957394}
+        x: 2076
+        y: 0
+        width: 519
+        height: 716
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 712a85ac5fc69c5a0800000000000000
-      internalID: -6500544784215006697
+      spriteID: 8a8a490f14444cf30800000000000000
+      internalID: 4594872569824585896
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Sprite_Sheet_-_Tocha_hud_5
+      name: Shrine_5
       rect:
         serializedVersion: 2
-        x: 660
-        y: 107
-        width: 132
-        height: 124
-      alignment: 9
-      pivot: {x: 0.63949215, y: 0.11286016}
+        x: 2595
+        y: 0
+        width: 519
+        height: 716
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: c321c504d1d16a3e0800000000000000
-      internalID: -2042913369494908356
+      spriteID: fe2e9d6719c5e50a0800000000000000
+      internalID: -6890968599996275985
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Sprite_Sheet_-_Tocha_hud_6
+      name: Shrine_6
       rect:
         serializedVersion: 2
-        x: 792
-        y: 108
-        width: 132
-        height: 123
-      alignment: 9
-      pivot: {x: 0.674365, y: 0.12575196}
+        x: 3114
+        y: 0
+        width: 519
+        height: 716
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 0632b44dc2b9cc4f0800000000000000
-      internalID: -807099616363601056
+      spriteID: 5c1b0b4c2c8b6c0c0800000000000000
+      internalID: -4555750826375597627
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Sprite_Sheet_-_Tocha_hud_7
+      name: Shrine_7
       rect:
         serializedVersion: 2
-        x: 924
-        y: 107
-        width: 132
-        height: 124
-      alignment: 9
-      pivot: {x: 0.57472736, y: 0.13407332}
+        x: 3633
+        y: 0
+        width: 519
+        height: 716
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 7b6047a2816ba96c0800000000000000
-      internalID: -4135793092878661961
+      spriteID: d8083477277e03d50800000000000000
+      internalID: 6715121523222610061
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Sprite_Sheet_-_Tocha_hud_8
+      name: Shrine_8
       rect:
         serializedVersion: 2
-        x: 1056
-        y: 106
-        width: 132
-        height: 125
-      alignment: 9
-      pivot: {x: 0.62454593, y: 0.14752252}
+        x: 4152
+        y: 0
+        width: 519
+        height: 716
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 62897af10b96f0690800000000000000
-      internalID: -7633766638203463642
+      spriteID: 5fc3329b4f3f98650800000000000000
+      internalID: 6235783391474826485
       vertices: []
       indices: 
       edges: []
