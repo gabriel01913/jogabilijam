@@ -100,7 +100,7 @@ public class TorchThrowBehavior : MonoBehaviour
   {
     if (!_moving)
     {
-      _moveDir = new Vector2(_playerPos.x - _torchPos.x, _playerPos.y - _torchPos.y).normalized;
+      _moveDir = new Vector2(torchPivot.position.x - _torchPos.x, torchPivot.position.y - _torchPos.y).normalized;
     }
     if (transform.parent != null)
     {

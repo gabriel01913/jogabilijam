@@ -46,4 +46,9 @@ public class TorchBehavior : MonoBehaviour
     this.timeLeft = maxDuration;
   }
 
+  private void OnTriggerEnter2D(Collider2D other)
+  {
+    Debug.Log("OnTriggerEnter2D");
+  }
+
 }

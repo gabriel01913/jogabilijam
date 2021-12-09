@@ -10,6 +10,7 @@ public class AnimationHandler : MonoBehaviour
 
   bool jump = false;
   bool throwTorch = false;
+  bool isDashing = false;
 
   // Start is called before the first frame update
   private void Awake()
@@ -63,6 +64,20 @@ public class AnimationHandler : MonoBehaviour
     {
       jump = false;
     }
+
+    if (_celeste._dashing)
+    {
+      if (!isDashing)
+      {
+        isDashing = true;
+        _animator.SetTrigger("onDash");
+      }
+    }
+    else
+    {
+      isDashing = false;
+    }
+
   }
 
 }
