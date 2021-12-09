@@ -176,13 +176,9 @@ public class TorchThrowBehavior : MonoBehaviour
     if (_hit.collider != null && !_stoped && _hasThrow)
     {
       Stop();
-      Debug.Log(_hit.normal);
-      Debug.Log(_hit.point);
-      Debug.Log(transform.position);
       if (_hit.normal.x > 0 || _hit.normal.y > 0)
       {
         Vector3 newpos = new Vector3(transform.position.x - _hit.point.x, transform.position.y - _hit.point.y, 0f);
-        Debug.Log(newpos);
         transform.position = new Vector3((transform.position.x + newpos.x), (transform.position.y + newpos.y), 0f);
       }
       else

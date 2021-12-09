@@ -10193,11 +10193,11 @@ MonoBehaviour:
   _jumpDuration: 13
   _jumpMinSpeed: 10
   _jumpMaxSpeed: 13
-  _jumpAcell: 0
+  _jumpAcell: 3
   _jumpTimes: 1
-  _jumpTimer: 14
-  _dashSpeed: 5
-  _dashDuration: 7
+  _jumpTimer: 9
+  _dashSpeed: 10
+  _dashDuration: 5
   _dashCounter: 1
   _dashFrezeTime: 6
   _fallMultiplier: 16
@@ -10208,20 +10208,20 @@ MonoBehaviour:
   _groundOffset: {x: 0, y: 0}
   _groundSize: {x: 1, y: 0.3}
   _groundDistance: 0
-  _wallSlideVelocity: 4
+  _wallSlideVelocity: 0.33
   _wallLayer:
     serializedVersion: 2
     m_Bits: 1024
-  _wallLefOffset: {x: -0.64, y: 0.96}
-  _wallLeftSize: {x: 0.2, y: -1.5}
+  _wallLefOffset: {x: -0.64, y: 1}
+  _wallLeftSize: {x: 0.1, y: 1}
   _wallLeftDistance: 0
-  _wallRightOffset: {x: 0.64, y: 1.03}
-  _wallRightSize: {x: 0.2, y: -1.5}
+  _wallRightOffset: {x: 0.64, y: 1}
+  _wallRightSize: {x: 0.1, y: 1}
   _wallRightDistance: 0
   _ccLayers:
     serializedVersion: 2
     m_Bits: 1024
-  _ccLenghtRayCast: 2.32
+  _ccLenghtRayCast: 0.45
   _ccEdegeRayCast: {x: 0.59, y: 0, z: 0}
   _ccInerRayCast: {x: 0.68, y: 0, z: 0}
   _coyoteTimer: 0.1
@@ -10241,7 +10241,7 @@ MonoBehaviour:
   _wallRight: 0
   _velocity: {x: 0, y: 0}
   _direction: {x: 0, y: 0, z: 0}
-  _aimDirection: {x: -8.888889, y: -5}
+  _aimDirection: {x: 53.599983, y: -9.24929}
 --- !u!114 &4413402571991988278
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -10422,7 +10422,7 @@ BoxCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 1.32}
+  m_Offset: {x: -0.060542762, y: 1.4456301}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0}
@@ -10433,7 +10433,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 1.2, y: 2.5}
+  m_Size: {x: 1.3210856, y: 2.7895699}
   m_EdgeRadius: 0
 --- !u!95 &4413402571991988279
 Animator:

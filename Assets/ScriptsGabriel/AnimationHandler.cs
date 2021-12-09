@@ -33,6 +33,7 @@ public class AnimationHandler : MonoBehaviour
     _animator.SetFloat("velocityY", _celeste._velocity.y);
     _animator.SetBool("isDashing", _celeste._dashing);
     _animator.SetBool("isInGround", _celeste._onGround);
+    _animator.SetBool("isWallSlide", _celeste._wallSlide);
 
 
 

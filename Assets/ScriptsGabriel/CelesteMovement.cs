@@ -264,14 +264,11 @@ public class CelesteMovement : MonoBehaviour
   #region Dash Methods
   void Dash(Vector2 dir)
   {
-    if (dir.x == 0 && dir.y == 0 && _faceRight)
-    {
+    if (_faceRight)
       dir.x = 1;
-    }
-    else if (dir.x == 0 && dir.y == 0 && !_faceRight)
-    {
+    else
       dir.x = -1;
-    }
+
     StartCoroutine(ApplyDash(dir));
 
   }
@@ -295,7 +292,7 @@ public class CelesteMovement : MonoBehaviour
     }
     else if (_dashTimer < (_dashDuration + _dashFrezeTime))
     {
-      c_rigi2d.velocity += dir.normalized * _dashSpeed;
+      c_rigi2d.velocity += new Vector2(dir.normalized.x, 0) * _dashSpeed;
       yield return null;
     }
     else

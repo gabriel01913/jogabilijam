@@ -1077,6 +1077,14 @@ PrefabInstance:
       propertyPath: mainCamera
       value: 
       objectReference: {fileID: 2123637852}
+    - target: {fileID: 469391943, guid: c5cdf5e2224124746b06db03fd8f0dc4, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0.58
+      objectReference: {fileID: 0}
+    - target: {fileID: 469391943, guid: c5cdf5e2224124746b06db03fd8f0dc4, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 1.04
+      objectReference: {fileID: 0}
     - target: {fileID: 1249366737, guid: c5cdf5e2224124746b06db03fd8f0dc4, type: 3}
       propertyPath: onInteractiveObjectLeftRange.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
@@ -1085,6 +1093,54 @@ PrefabInstance:
       propertyPath: onNewInteractiveObjectInRange.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
       objectReference: {fileID: 216526998}
+    - target: {fileID: 4413402571991988234, guid: c5cdf5e2224124746b06db03fd8f0dc4, type: 3}
+      propertyPath: _jumpTimer
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 4413402571991988234, guid: c5cdf5e2224124746b06db03fd8f0dc4, type: 3}
+      propertyPath: _aimDirection.x
+      value: -9.479107
+      objectReference: {fileID: 0}
+    - target: {fileID: 4413402571991988234, guid: c5cdf5e2224124746b06db03fd8f0dc4, type: 3}
+      propertyPath: _aimDirection.y
+      value: -8.645938
+      objectReference: {fileID: 0}
+    - target: {fileID: 4413402571991988234, guid: c5cdf5e2224124746b06db03fd8f0dc4, type: 3}
+      propertyPath: _wallLeftSize.x
+      value: 0.1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4413402571991988234, guid: c5cdf5e2224124746b06db03fd8f0dc4, type: 3}
+      propertyPath: _wallLeftSize.y
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4413402571991988234, guid: c5cdf5e2224124746b06db03fd8f0dc4, type: 3}
+      propertyPath: _ccLenghtRayCast
+      value: 0.45
+      objectReference: {fileID: 0}
+    - target: {fileID: 4413402571991988234, guid: c5cdf5e2224124746b06db03fd8f0dc4, type: 3}
+      propertyPath: _wallLefOffset.x
+      value: -0.64
+      objectReference: {fileID: 0}
+    - target: {fileID: 4413402571991988234, guid: c5cdf5e2224124746b06db03fd8f0dc4, type: 3}
+      propertyPath: _wallLefOffset.y
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4413402571991988234, guid: c5cdf5e2224124746b06db03fd8f0dc4, type: 3}
+      propertyPath: _wallRightSize.x
+      value: 0.1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4413402571991988234, guid: c5cdf5e2224124746b06db03fd8f0dc4, type: 3}
+      propertyPath: _wallRightSize.y
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4413402571991988234, guid: c5cdf5e2224124746b06db03fd8f0dc4, type: 3}
+      propertyPath: _wallRightOffset.x
+      value: 0.64
+      objectReference: {fileID: 0}
+    - target: {fileID: 4413402571991988234, guid: c5cdf5e2224124746b06db03fd8f0dc4, type: 3}
+      propertyPath: _wallRightOffset.y
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 4413402571991988239, guid: c5cdf5e2224124746b06db03fd8f0dc4, type: 3}
       propertyPath: m_Name
       value: Jogador
