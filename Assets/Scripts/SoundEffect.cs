@@ -27,7 +27,7 @@ public class SoundEffect : MonoBehaviour
   {
     if (clips.Length == 0)
       return;
-    audioSource.pitch = ramdomPitch ? Random.Range(minPitch, maxPitch) : 1;
+    audioSource.pitch = ramdomPitch ? Random.Range(minPitch, maxPitch) : audioSource.pitch;
     audioSource.PlayOneShot(clips[Random.Range(0, clips.Length - 1)]);
   }
 

@@ -233,7 +233,7 @@ public class CelesteMovement : MonoBehaviour
       if (_Inputs.GetButton("Jump")) _jumpTimer += 1f;
       float jumpforce = Mathf.Clamp(_jumpSpeed + _jumpTimer, _jumpMinSpeed, _jumpMaxSpeed);
       c_rigi2d.velocity = new Vector2(_velocity.x, 0);
-      dir = (dir + Vector2.up) * (jumpforce + _jumpAcell);
+      dir = (dir + Vector2.up) * (jumpforce + _jumpAcell) * 2f;
       c_rigi2d.velocity = dir;
       if (_jumpTimer >= _jumpDuration || !_Inputs.GetButton("Jump"))
       {

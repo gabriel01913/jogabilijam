@@ -29,7 +29,7 @@ public class Restart : MonoBehaviour
     if (collision.tag == "Player")
     {
       collision.gameObject.transform.position = _respawn;
-      _scriptTorch.Restart();
+      // _scriptTorch.Restart();
     }
   }
 }

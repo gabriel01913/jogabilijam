@@ -1,39 +1,36 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
-
+using DG.Tweening;
+using UnityEngine.Events;
 
 public class TorchThrowBehavior : MonoBehaviour
 {
   [Header("Variables")]
   [SerializeField] Transform torchPivot;
-  [SerializeField] Vector3 _boxSize = new Vector3(0.96f, 0.81f, 0f);
-  [SerializeField] Vector3 _boxOffset = new Vector3(0f, 0.05f, 0f);
-  [SerializeField] float _rotateSpeed = 10f;
-  [SerializeField] float _force = 30f;
+  [SerializeField] float throwSpeed = 30f;
   [SerializeField] LayerMask _layerMask;
-  [SerializeField] LayerMask _playerMask;
   public GameObject _player;
   CelesteMovement _celeste;
   [SerializeField] Vector2 _aimDir;
-  [SerializeField] Vector2 _moveDir;
-  Vector3 _torchPos;
-  Vector3 _playerPos;
+
+  [Header("Events")]
+  public UnityEvent OnThrow;
+  public UnityEvent OnCallTorch;
+  public UnityEvent OnTorchCollide;
+  public UnityEvent OnGetTorch;
+
   [Header("Debug")]
-  [SerializeField] bool _canThrow;
   [SerializeField] bool _hasThrow;
   public bool HasThrow => _hasThrow;
-  [SerializeField] bool _moving;
-  [SerializeField] bool _stoped;
   [SerializeField] bool _returning;
-  Coroutine _coroutine;
-  Vector2 _point;
   Vector2 _mousePos;
   PlayerInput _playerInput;
   InputHandler _Inputs;
   Rigidbody2D c_rigi2d;
   Animator animator;
+  bool isThrowing = false;
+  DG.Tweening.Core.TweenerCore<Vector3, Vector3, DG.Tweening.Plugins.Options.VectorOptions> throwTween;
+  DG.Tweening.Core.TweenerCore<Quaternion, Vector3, DG.Tweening.Plugins.Options.QuaternionOptions> rotateTween;
   // Start is called before the first frame update
   void Awake()
   {
@@ -46,10 +43,38 @@ public class TorchThrowBehavior : MonoBehaviour
   // Update is called once per frame
   void Update()
   {
-    CheckCollision();
-    CheckPoint();
-    _playerPos = _player.transform.position;
-    _torchPos = transform.position;
+    UpdateAimDirection();
+    UpdatePlayerGet();
+
+    if (!_hasThrow)
+    {
+      transform.localPosition = torchPivot.localPosition;
+    }
+
+    UpdatePlayerInput();
+
+  }
+
+  void UpdatePlayerInput()
+  {
+    if (_Inputs.GetButtonDown("Torch") && !_hasThrow)
+    {
+      // on throw
+      TorchThrow();
+
+    }
+    else if (_Inputs.GetButtonDown("Torch") && _hasThrow)
+    {
+      if (!_returning)
+      {
+        // on push back
+        PullTorchBack();
+      }
+    }
+  }
+
+  void UpdateAimDirection()
+  {
     if (_playerInput.currentControlScheme == "Keyboard")
     {
       _mousePos = _celeste._aimDirection;
@@ -59,155 +84,118 @@ public class TorchThrowBehavior : MonoBehaviour
     {
       _aimDir = _celeste._aimDirection.normalized;
     }
-    if (_Inputs.GetButtonDown("Torch") && !_hasThrow)
-    {
-      _hasThrow = true;
-    }
+  }
 
-    if (_Inputs.GetButtonDown("Torch") && _hasThrow && _stoped)
-    {
-      _returning = true;
-    }
-  }
-  private void FixedUpdate()
+  void TorchThrow()
   {
-    if (_hasThrow && !_stoped) TorchThrow(_aimDir);
-    if (_returning) ReturningThrow();
-    if (!_hasThrow) transform.localPosition = torchPivot.localPosition;
-  }
-  void TorchThrow(Vector3 dir)
-  {
-    if (!_moving)
-    {
-      _moveDir = dir.normalized;
-    }
-    if (_moveDir == Vector2.zero)
+    _hasThrow = true;
+    transform.parent = null;
+    animator.SetBool("show", true);
+    isThrowing = true;
+    OnThrow?.Invoke();
+
+    Vector2 direction = _aimDir.normalized;
+
+    if (direction == Vector2.zero)
     {
       if (_celeste._faceRight)
       {
-        _moveDir.x = 1f;
+        direction.x = 1f;
       }
       else
       {
-        _moveDir.x = -1f;
+        direction.x = -1f;
       }
     }
-    transform.parent = null;
-    animator.SetBool("show", true);
-    _coroutine = StartCoroutine(Moving(_moveDir));
+
+    Vector2 endPosition = GetDesiredEndPosition(torchPivot.position, direction);
+
+    float distance = Vector2.Distance(torchPivot.position, endPosition);
+
+    float duration = distance / throwSpeed;
+
+    rotateTween = transform.DORotate(new Vector3(0, 0, 360), .3f, RotateMode.WorldAxisAdd).SetLoops(-1, LoopType.Restart);
+
+    throwTween = transform.DOMove(endPosition, duration)
+    .OnComplete(() =>
+    {
+      isThrowing = false;
+      rotateTween?.Kill();
+      OnTorchCollide?.Invoke();
+    });
+
   }
-  void ReturningThrow()
+
+  Vector2 GetDesiredEndPosition(Vector2 startPosition, Vector2 direction)
   {
-    if (!_moving)
+    Vector2 point = Vector2.zero;
+    RaycastHit2D hit = Physics2D.Raycast(startPosition, direction, float.PositiveInfinity, _layerMask);
+    if (hit.collider != null)
     {
-      _moveDir = new Vector2(torchPivot.position.x - _torchPos.x, torchPivot.position.y - _torchPos.y).normalized;
+      point = hit.point;
     }
-    if (transform.parent != null)
+    else
     {
-      transform.parent = null;
+      point = startPosition + direction * 10f;
     }
-    _coroutine = StartCoroutine(Moving(_moveDir));
+
+    return Vector2.Lerp(startPosition, point, 0.99f);
   }
-  void GetThrow()
+
+  void PullTorchBack()
   {
-    if (_coroutine != null)
+    _returning = true;
+    isThrowing = false;
+    rotateTween?.Kill();
+    throwTween?.Kill();
+
+    OnCallTorch?.Invoke();
+
+    Vector2 direction = torchPivot.position - transform.position;
+
+    Vector2 endPosition = GetDesiredEndPosition(transform.position, direction);
+
+    float distance = Vector2.Distance(torchPivot.position, transform.position);
+
+    float duration = (distance / throwSpeed);
+
+    rotateTween = transform.DORotate(new Vector3(0, 0, 360), .3f, RotateMode.WorldAxisAdd).SetLoops(-1, LoopType.Restart);
+    throwTween = transform.DOMove(endPosition, duration)
+    .OnComplete(() =>
     {
-      StopCoroutine(_coroutine);
+      _returning = false;
+      rotateTween?.Kill();
+    });
+
+  }
+
+  void UpdatePlayerGet()
+  {
+    if (!isThrowing && HasThrow)
+    {
+      if (Vector2.Distance(transform.position, torchPivot.position) < 2f)
+      {
+        GetTorch();
+      }
     }
-    c_rigi2d.velocity = Vector3.zero;
-    transform.rotation = Quaternion.Euler(Vector3.zero);
+  }
+
+  public void GetTorch()
+  {
     _hasThrow = false;
     _returning = false;
-    _moving = false;
-    _stoped = false;
+    rotateTween?.Kill();
+    throwTween?.Kill();
     transform.parent = _player.transform;
-    transform.localPosition = torchPivot.localPosition;
+    transform.localPosition = Vector3.zero;
+    transform.localRotation = Quaternion.identity;
     animator.SetBool("show", false);
-
-    if (!_celeste._onGround)
-    {
-      _celeste._dashCounter = 1f;
-    }
+    OnGetTorch?.Invoke();
+    _player.transform.DOShakePosition(.2f, .1f, 20, 90, false, true);
   }
-  public void Restart()
-  {
-    _aimDir = Vector2.zero;
-    _moveDir = Vector2.zero;
-    c_rigi2d.velocity = Vector3.zero;
-    transform.rotation = Quaternion.Euler(Vector3.zero);
-    _hasThrow = false;
-    _returning = false;
-    _moving = false;
-    _stoped = false;
-    transform.parent = _player.transform;
-    transform.localPosition = torchPivot.localPosition;
-  }
-  IEnumerator Moving(Vector2 dir)
-  {
-    _stoped = false;
-    _moving = true;
-    c_rigi2d.velocity = dir * _force;
-    transform.Rotate(0, 0, _rotateSpeed);
-    yield return null;
-  }
-  private void Stop()
-  {
-    if (_coroutine != null)
-    {
-      StopCoroutine(_coroutine);
-    }
-    _moving = false;
-    _returning = false;
-    _stoped = true;
-    c_rigi2d.velocity = Vector3.zero;
-    transform.rotation = Quaternion.Euler(Vector3.zero);
-  }
-  void CheckCollision()
-  {
-    RaycastHit2D _hit = Physics2D.BoxCast(new Vector3(transform.position.x + _boxOffset.x, transform.position.y + _boxOffset.y, 0f),
-                        _boxSize, 0f, Vector2.left, 0f, _playerMask);
-    if (_hit.collider != null && (_stoped || _returning))
-    {
-      GetThrow();
-      return;
-    }
-    _hit = Physics2D.BoxCast(new Vector3(transform.position.x + _boxOffset.x, transform.position.y + _boxOffset.y, 0f),
-                        _boxSize, 0f, Vector2.left, 0f, _layerMask);
-    if (_hit.collider != null && !_stoped && _hasThrow)
-    {
-      Stop();
-      if (_hit.normal.x > 0 || _hit.normal.y > 0)
-      {
-        Vector3 newpos = new Vector3(transform.position.x - _hit.point.x, transform.position.y - _hit.point.y, 0f);
-        transform.position = new Vector3((transform.position.x + newpos.x), (transform.position.y + newpos.y), 0f);
-      }
-      else
-      {
-        Vector3 newpos = new Vector3(_hit.point.x - transform.position.x, _hit.point.y - transform.position.y, 0f);
-        Debug.Log(newpos);
-        transform.position = new Vector3((transform.position.x - newpos.x), (transform.position.y - newpos.y), 0f);
-      }
 
 
-    }
-  }
   #region QOL
-  Vector3 CheckPoint()
-  {
-    Vector3 _newPosition = Vector3.zero;
-    RaycastHit2D _hit = Physics2D.Raycast(transform.position, _aimDir, Mathf.Infinity, _layerMask);
-    _point = _hit.point;
-    Debug.DrawRay(transform.position, _aimDir, Color.red);
-    return _newPosition;
-  }
-  private void OnDrawGizmos()
-  {
-    Vector3 pos = new Vector3(_aimDir.x * 10 + transform.position.x, _aimDir.y * 10 + transform.position.y, 0f);
-    Gizmos.DrawLine(transform.position, pos);
-    Gizmos.DrawWireSphere(_point, 1);
-    Gizmos.DrawWireCube(new Vector3(transform.position.x + _boxOffset.x, transform.position.y + _boxOffset.y, 0f), _boxSize);
-  }
-
   private void OnValidate()
   {
     if (torchPivot)
@@ -215,7 +203,6 @@ public class TorchThrowBehavior : MonoBehaviour
       transform.localPosition = torchPivot.localPosition;
     }
   }
-
 
   #endregion
 }
