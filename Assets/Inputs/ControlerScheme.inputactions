@@ -51,7 +51,15 @@
                     "id": "0c2a7313-c08d-48ee-8dad-3c5a49032d89",
                     "expectedControlType": "Button",
                     "processors": "",
-                    "interactions": "Tap"
+                    "interactions": ""
+                },
+                {
+                    "name": "RestartProgress",
+                    "type": "Button",
+                    "id": "0c6c4936-5217-46c9-9ede-beb8e183ea66",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": ""
                 }
             ],
             "bindings": [
@@ -239,6 +247,28 @@
                     "processors": "",
                     "groups": "Gamepad",
                     "action": "Interact",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "e794886a-c440-439d-946f-e9aad7add5cf",
+                    "path": "<Gamepad>/start",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Gamepad",
+                    "action": "RestartProgress",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "20c464b7-1dba-4b31-8c30-c9f4170d09fa",
+                    "path": "<Keyboard>/t",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Keyboard",
+                    "action": "RestartProgress",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

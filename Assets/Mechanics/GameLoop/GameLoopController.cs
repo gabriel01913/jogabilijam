@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.InputSystem;
 using UnityEngine.SceneManagement;
 
 public class GameLoopController : MonoBehaviour
@@ -71,4 +72,15 @@ public class GameLoopController : MonoBehaviour
   {
     SceneManager.LoadScene(SceneManager.GetActiveScene().name);
   }
+
+  public void RestartProgress(InputAction.CallbackContext context)
+  {
+    Debug.Log("Restarting Progress");
+    if (context.performed)
+    {
+      PlayerPrefs.DeleteAll();
+      RestartScene();
+    }
+  }
+
 }
