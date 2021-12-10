@@ -11,6 +11,7 @@ public class FireShrine : MonoBehaviourID
   [Header("References")]
   public Animator fireAnimator;
   public AudioSource fireAudioSource;
+  public PolygonCollider2D cineMachineConfiner;
 
   [Header("Events")]
   public UnityEvent onFireStart;
@@ -59,5 +60,4 @@ public class FireShrine : MonoBehaviourID
     base.OnValidate();
     this.name = shrineName;
   }
-
 }

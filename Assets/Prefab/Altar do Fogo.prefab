@@ -327,6 +327,7 @@ MonoBehaviour:
   shrineName: Altar do Fogo
   fireAnimator: {fileID: 8395531770422647509}
   fireAudioSource: {fileID: 2111544948625554829}
+  cineMachineConfiner: {fileID: 0}
   onFireStart:
     m_PersistentCalls:
       m_Calls:
@@ -565,7 +566,7 @@ AudioSource:
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 0}
   m_PlayOnAwake: 1
-  m_Volume: 1
+  m_Volume: 0.382
   m_Pitch: 1
   Loop: 0
   Mute: 0

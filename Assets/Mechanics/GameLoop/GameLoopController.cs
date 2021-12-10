@@ -1,14 +1,16 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class GameLoopController : MonoBehaviour
 {
 
   [Header("References")]
   public Transform player;
-
   public Transform gameStartPoint;
+  public ScreenTransition screenTransition;
+  public Cinemachine.CinemachineConfiner cinemachineConfiner;
 
   private void Start()
   {
@@ -22,8 +24,14 @@ public class GameLoopController : MonoBehaviour
 
   public void GameStart()
   {
+    if (playerHasStartedTheGame)
+    {
+      screenTransition.FadeIn();
+    }
     PlacePlayerAtCorrectPosition();
   }
+
+  bool playerHasStartedTheGame => (PlayerPrefs.GetString("LastFireShrine", null) != null);
 
   public void PlacePlayerAtCorrectPosition()
   {
@@ -31,6 +39,7 @@ public class GameLoopController : MonoBehaviour
     if (lastFireShrine != null)
     {
       player.position = lastFireShrine.transform.position;
+      cinemachineConfiner.m_BoundingShape2D = lastFireShrine.cineMachineConfiner;
       return;
     }
 
@@ -55,5 +64,11 @@ public class GameLoopController : MonoBehaviour
     }
 
     return null;
+  }
+
+
+  public void RestartScene()
+  {
+    SceneManager.LoadScene(SceneManager.GetActiveScene().name);
   }
 }

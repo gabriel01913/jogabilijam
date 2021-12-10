@@ -191,9 +191,9 @@
                     "name": "",
                     "id": "4c0b7066-0638-4d11-9a0d-c8fc7aa10f55",
                     "path": "<Gamepad>/leftTrigger",
-                    "interactions": "",
+                    "interactions": "Press",
                     "processors": "",
-                    "groups": "",
+                    "groups": "Gamepad",
                     "action": "Torch",
                     "isComposite": false,
                     "isPartOfComposite": false
