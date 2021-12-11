@@ -162,7 +162,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   dialog:
-  - Altar Acesso!
+  - Altar Aceso!
   - "Seu progresso est\xE1 seguro"
   isSystemMessage: 1
 --- !u!1 &2111544948625554839

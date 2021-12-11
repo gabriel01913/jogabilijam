@@ -175,10 +175,10 @@ TextureImporter:
       name: assets_0
       rect:
         serializedVersion: 2
-        x: 57
-        y: 618
-        width: 668
-        height: 434
+        x: 60
+        y: 619
+        width: 664
+        height: 432
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -265,7 +265,7 @@ TextureImporter:
         height: 1051
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
+      border: {x: 378, y: 0, z: 388, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
@@ -344,9 +344,9 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 57
-        y: 121
+        y: 124
         width: 667
-        height: 437
+        height: 434
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -364,10 +364,10 @@ TextureImporter:
       name: assets_9
       rect:
         serializedVersion: 2
-        x: 778
-        y: 121
-        width: 671
-        height: 441
+        x: 780
+        y: 124
+        width: 665
+        height: 434
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
