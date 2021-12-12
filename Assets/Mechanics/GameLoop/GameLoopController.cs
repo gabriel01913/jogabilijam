@@ -18,6 +18,7 @@ public class GameLoopController : MonoBehaviour
   public PolygonCollider2D startConfiner;
 
   public Image gameTitle;
+  public Image gameTitle2;
 
   private void Start()
   {
@@ -32,10 +33,17 @@ public class GameLoopController : MonoBehaviour
   public void GameStart()
   {
     cinemachineConfiner.m_BoundingShape2D = startConfiner;
-    Debug.Log("Game Start" + PlayerPrefs.GetString("LastFireShrine", null) == "");
-    if (!playerHasStartedTheGame)
+
+    if (PlayerPrefs.GetInt("GameStarted", 0) == 0)
     {
+      ShowGameTitle();
     }
+    else
+    {
+      player.position = gameStartPoint.position;
+    }
+
+    PlayerPrefs.SetInt("GameStarted", 1);
 
     screenTransition.FadeIn();
     PlacePlayerAtCorrectPosition();
@@ -44,6 +52,7 @@ public class GameLoopController : MonoBehaviour
   public void ShowGameTitle()
   {
     gameTitle.enabled = true;
+    gameTitle2.enabled = true;
     StartCoroutine(IntroWait());
   }
 
@@ -51,9 +60,21 @@ public class GameLoopController : MonoBehaviour
   IEnumerator IntroWait()
   {
     yield return new WaitForSeconds(introWaitTime);
+    gameTitle2.DOFade(1, 1f).SetEase(Ease.InOutQuad);
     gameTitle.DOFade(0, 2f).SetEase(Ease.InOutQuad).OnComplete(() =>
     {
       gameTitle.enabled = false;
+      StartCoroutine(IntroWait2());
+
+    });
+  }
+
+  IEnumerator IntroWait2()
+  {
+    yield return new WaitForSeconds(introWaitTime * 7);
+    gameTitle2.DOFade(0, 1f).SetEase(Ease.InOutQuad).OnComplete(() =>
+    {
+      gameTitle2.enabled = false;
     });
   }
 
@@ -70,7 +91,6 @@ public class GameLoopController : MonoBehaviour
     }
 
     player.position = gameStartPoint.position;
-    ShowGameTitle();
 
   }
 
