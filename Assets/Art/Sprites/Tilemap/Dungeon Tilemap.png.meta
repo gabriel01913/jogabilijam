@@ -1,0 +1,448 @@
+fileFormatVersion: 2
+guid: 3cdc4dba87b93994fb93a0714a022623
+TextureImporter:
+  internalIDToNameTable:
+  - first:
+      213: -4436749441714923459
+    second: Dungeon Tilemap_0
+  - first:
+      213: 930415825752545293
+    second: Dungeon Tilemap_1
+  - first:
+      213: 7684031526310182971
+    second: Dungeon Tilemap_2
+  - first:
+      213: 6572945926214183111
+    second: Dungeon Tilemap_3
+  - first:
+      213: -3218363939952718867
+    second: Dungeon Tilemap_4
+  - first:
+      213: 6522018248203350073
+    second: Dungeon Tilemap_5
+  - first:
+      213: 2632051637580430255
+    second: Dungeon Tilemap_6
+  - first:
+      213: 2994757397901486478
+    second: Dungeon Tilemap_7
+  - first:
+      213: 7315092175494257835
+    second: Dungeon Tilemap_8
+  - first:
+      213: 17120689839672162
+    second: Dungeon Tilemap_9
+  - first:
+      213: 4906782629359530519
+    second: Dungeon Tilemap_10
+  externalObjects: {}
+  serializedVersion: 11
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 1
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 126
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  platformSettings:
+  - serializedVersion: 3
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 3
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 3
+    buildTarget: WebGL
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 3
+    buildTarget: Android
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: Dungeon Tilemap_0
+      rect:
+        serializedVersion: 2
+        x: 255
+        y: 945
+        width: 255
+        height: 255
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape:
+      - - {x: -123.5, y: -74.5}
+        - {x: -123.5, y: -127.5}
+        - {x: 127.5, y: -127.5}
+        - {x: 127.5, y: -78.5}
+      tessellationDetail: 0
+      bones: []
+      spriteID: d385b21c3ef7d62c0800000000000000
+      internalID: -4436749441714923459
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Dungeon Tilemap_1
+      rect:
+        serializedVersion: 2
+        x: 510
+        y: 945
+        width: 255
+        height: 255
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape:
+      - - {x: -127.5, y: -78.5}
+        - {x: -127.5, y: -127.5}
+        - {x: 127.5, y: -127.5}
+        - {x: 127.5, y: -79.5}
+      tessellationDetail: 0
+      bones: []
+      spriteID: d08d163934089ec00800000000000000
+      internalID: 930415825752545293
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Dungeon Tilemap_2
+      rect:
+        serializedVersion: 2
+        x: 765
+        y: 945
+        width: 255
+        height: 255
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape:
+      - - {x: -127.5, y: -79.5}
+        - {x: -127.5, y: -127.5}
+        - {x: 124.5, y: -127.5}
+        - {x: 123.5, y: -106.5}
+        - {x: 109.5, y: -81.5}
+      tessellationDetail: 0
+      bones: []
+      spriteID: b300f9026f923aa60800000000000000
+      internalID: 7684031526310182971
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Dungeon Tilemap_3
+      rect:
+        serializedVersion: 2
+        x: 255
+        y: 690
+        width: 255
+        height: 255
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape:
+      - - {x: -126.5, y: 127.5}
+        - {x: -126.5, y: -116.5}
+        - {x: -114.5, y: -127.5}
+        - {x: 127.5, y: -127.5}
+        - {x: 127.5, y: 127.5}
+      tessellationDetail: 0
+      bones: []
+      spriteID: 7c8e8d3be7bc73b50800000000000000
+      internalID: 6572945926214183111
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Dungeon Tilemap_4
+      rect:
+        serializedVersion: 2
+        x: 510
+        y: 690
+        width: 255
+        height: 255
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape:
+      - - {x: -127.5, y: 127.5}
+        - {x: -127.5, y: -127.5}
+        - {x: 127.5, y: -127.5}
+        - {x: 127.5, y: 127.5}
+      tessellationDetail: 0
+      bones: []
+      spriteID: deb01395c031653d0800000000000000
+      internalID: -3218363939952718867
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Dungeon Tilemap_5
+      rect:
+        serializedVersion: 2
+        x: 765
+        y: 690
+        width: 255
+        height: 255
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape:
+      - - {x: 126.5, y: 127.5}
+        - {x: -127.5, y: 127.5}
+        - {x: -127.5, y: -127.5}
+        - {x: 113.5, y: -127.5}
+        - {x: 122.5, y: -95.5}
+        - {x: 126.5, y: 43.5}
+      tessellationDetail: 0
+      bones: []
+      spriteID: 930b6c6aa0dd28a50800000000000000
+      internalID: 6522018248203350073
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Dungeon Tilemap_6
+      rect:
+        serializedVersion: 2
+        x: 255
+        y: 435
+        width: 255
+        height: 255
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape:
+      - - {x: -117.5, y: 127.5}
+        - {x: -127.5, y: 123.5}
+        - {x: -127.5, y: -19.5}
+        - {x: -114.5, y: -56.5}
+        - {x: 127.5, y: -56.5}
+        - {x: 127.5, y: 127.5}
+      tessellationDetail: 0
+      bones: []
+      spriteID: fab7778e40de68420800000000000000
+      internalID: 2632051637580430255
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Dungeon Tilemap_7
+      rect:
+        serializedVersion: 2
+        x: 510
+        y: 435
+        width: 255
+        height: 255
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape:
+      - - {x: -127.5, y: 127.5}
+        - {x: -127.5, y: -56.5}
+        - {x: 125.5, y: -56.5}
+        - {x: 127.5, y: -55.5}
+        - {x: 127.5, y: 127.5}
+      tessellationDetail: 0
+      bones: []
+      spriteID: e89246a8cf38f8920800000000000000
+      internalID: 2994757397901486478
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Dungeon Tilemap_8
+      rect:
+        serializedVersion: 2
+        x: 765
+        y: 435
+        width: 255
+        height: 255
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape:
+      - - {x: -127.5, y: 127.5}
+        - {x: -127.5, y: -56.5}
+        - {x: 127.5, y: -56.5}
+        - {x: 127.5, y: 127.5}
+      tessellationDetail: 0
+      bones: []
+      spriteID: bac139b939d648560800000000000000
+      internalID: 7315092175494257835
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Dungeon Tilemap_9
+      rect:
+        serializedVersion: 2
+        x: 255
+        y: 180
+        width: 255
+        height: 255
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape:
+      - - {x: -127.5, y: 127.5}
+        - {x: -127.5, y: -127.5}
+        - {x: 127.5, y: -127.5}
+        - {x: 127.5, y: 127.5}
+      tessellationDetail: 0
+      bones: []
+      spriteID: 26b043c3d23dc3000800000000000000
+      internalID: 17120689839672162
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Dungeon Tilemap_10
+      rect:
+        serializedVersion: 2
+        x: 510
+        y: 180
+        width: 255
+        height: 255
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape:
+      - - {x: -127.5, y: 127.5}
+        - {x: -127.5, y: -127.5}
+        - {x: 127.5, y: -127.5}
+        - {x: 127.5, y: 16.5}
+        - {x: 126.5, y: 127.5}
+      tessellationDetail: 0
+      bones: []
+      spriteID: 712380dddc4681440800000000000000
+      internalID: 4906782629359530519
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    physicsShape: []
+    bones: []
+    spriteID: 5e97eb03825dee720800000000000000
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+  spritePackingTag: 
+  pSDRemoveMatte: 0
+  pSDShowRemoveMatteOption: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
